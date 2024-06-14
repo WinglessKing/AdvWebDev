@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang ="en">
+
+   <body>
+     <h1>Adrey'n Lewis</h1>
+        <h2>Kennesaw State 24'</h2>
+            <p>I am a student pursuing a BS in Information Technology and expected to graduate May 2024</p>
+  <div class="main">
+     <section id="about">
+        <h2>About</h2>
+        <p> to host all
+your exercises and projects in this course. The sites/pages need to be accessible to the public with a public URL.
+The goals are to Learn and practice web hosting, Have more control and less restriction, Use it beyond the course for development, Begin to have my own domain!</p>
+      </section>           
+  </div>
+  
+   <div class="footer">
+        <a>https://ccse.kennesaw.edu/it/</a>
+   </div>   
+</div>      
+   </body>
+</html>
