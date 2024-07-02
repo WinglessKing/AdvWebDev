@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Search</title>
-    <link rel="stylesheet" href="AdvWebDev/css/ms2style.css">
+    <link rel="stylesheet" href="css/ms2style.css">
 </head>
+    
 <body>
     <div id = "navbar">
         <nav>
@@ -20,7 +21,9 @@
         <input type="text" id="keyTerm" placeholder="Enter search term">
         <button id="searchButton">Search</button>
     </div>
+    
     <div id="resultsContainer"></div>
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <script>
@@ -51,7 +54,7 @@
             resultsContainer.append(bookElement);
         });
     }
-});
+      });
 
     </script>
 </body>
