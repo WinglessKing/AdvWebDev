@@ -59,9 +59,14 @@ nav ul li a:hover {
 </head>
     
 <body>
-    <div id="main-menu-container"></div>
-
-    <div id="book-details-container"></div>
+        <nav>
+            <ul>
+                <li><a href ="milestone2.html">Home</a></li>
+                <li><a href ="mybookshelf.html">My Bookshelf</a></li>
+            </ul>
+        </nav>
+        
+    <div id="bookDetailsContainer"></div>
     <div id="viewerCanvas" style="width: 600px; height: 500px; margin: auto;"></div>
     <p id="test-message">Testin 4.</p>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -86,7 +91,7 @@ nav ul li a:hover {
     function displayBookDetails(data) {
         console.log('Displaying book details'); // Debugging line
         const book = data.volumeInfo;
-        const bookDetailsContainer = $('#book-details-container');
+        const bookDetailsContainer = $('#bookDetailsContainer');
 
         const bookDetails = `
             <h1>${book.title}</h1>
