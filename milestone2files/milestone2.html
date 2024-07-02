@@ -22,7 +22,7 @@
         <button id="searchbButton">Search</button>
     </div>
         
-    <div id="maincontainer"></div>
+    <div id="mainContainer"></div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
        $(document).ready(function() {
@@ -36,7 +36,7 @@
     });
 
     function displayResults(data) {
-        const results = $('main');
+        const results = $('mainContainer');
         results.empty();
 
         data.items.forEach((item, index) => {
