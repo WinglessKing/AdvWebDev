@@ -29,12 +29,12 @@ nav ul li a:hover {
     background-color: #111;
 }
 
-#search-container {
+#searchContainer {
     padding: 20px;
     text-align: center;
 }
 
-#resultsContainer, #bookshelf-container {
+#resultsContainer, #bookshelfContainer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
