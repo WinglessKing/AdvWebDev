@@ -6,28 +6,32 @@ body {
     color: light-gray;
 }
 
-nav ul {
-    list-style-type: none;
-    padding: 0;
-    background-color: #333;
-    overflow: hidden;
+nav ul{
+	float:left; 
+	list-style-type: none;
+	margin:0;
+	padding:0;
+	overflow:hidden;
+	color:#2272FF; /*Neon Blue*/
 }
 
-nav ul li {
-    float: left;
+a{
+	display: contents;
+	overflow: hidden;
+	padding: 10px;
+  	padding: 14px 16px;
+  	text-decoration:none;
+	font-size: 20px;
+}
+		
+li a:hover {
+  background-color: #3C454B;
 }
 
-nav ul li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
+li img{
+	width:150px;
 }
 
-nav ul li a:hover {
-    background-color: #111;
-}
 
 #searchContainer {
     padding: 20px;
