@@ -4,7 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Details</title>
-    <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>   
+    <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+    <style>
+body {
+  background-color: white;
+}
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    background-color: #333;
+    overflow: hidden;
+}
+
+nav ul li {
+    float: left;
+}
+
+nav ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    background-color: #111;
+}
+
+#bookshelfContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.bookCard {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+.bookCard img {
+    max-width: 100%;
+}
+</style>
 </head>
     
 <body>
@@ -15,9 +61,9 @@
             </ul>
         </nav>
         
-    <div id="book-details-container"></div>
+    <div id="bookDetailsContainer"></div>
     <div id="viewerCanvas" style="width: 600px; height: 500px; margin: auto;"></div>
-    <p id="test-message">Testin 4.</p>
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
 $(document).ready(function() {
@@ -40,7 +86,7 @@ $(document).ready(function() {
     function displayBookDetails(data) {
         console.log('Displaying book details'); // Debugging line
         const book = data.volumeInfo;
-        const bookDetailsContainer = $('#book-details-container');
+        const bookDetailsContainer = $('#bookDetailsContainer');
 
         const bookDetails = `
             <h1>${book.title}</h1>
