@@ -1,105 +1,54 @@
-/*Navbar*/
-nav ul{
-	float:left; 
-	list-style-type: none;
-	margin:0;
-	padding:0;
-	overflow:hidden;
-	color:#2272FF; /*Neon Blue*/
+/*General Formating*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-a{
-	display: contents;
-	overflow: hidden;
-	padding: 10px;
-  	padding: 14px 16px;
-  	text-decoration:none;
-	font-size: 20px;
-}
-		
-li a:hover {
-  background-color: #3C454B;
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    background-color: #333;
+    overflow: hidden;
 }
 
-li img{
-	width:150px;
+nav ul li {
+    float: left;
 }
 
-/* Layout */
-.row {  
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
-.column {  
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
-.badge {
-  flex: 20%;
-  background-color: black;
-  padding: 20px;
-}
-.card {
-  flex: 70%;
-  /*align-items: stretch;*/
-  background-color: black;
-  padding: 20px;	
-}
-.main {
-  flex: 70%;
-  background-color: black;
-  padding: 20px;
+nav ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
 }
 
-@media (max-width: 800px) {
-  .badge, .main {   
-    flex:100%
-  }
-}
-/*General Formats*/
-ul {
-	list-style-type: none;
-	display:inline-block;
-	margin:0;
-	overflow:hidden;
-	color: grey;
+nav ul li a:hover {
+    background-color: #111;
 }
 
-li{
-	padding: 5px;
-}
-body{
-	margin: 0px;
-	background-color: black;
+#search-container {
+    padding: 20px;
+    text-align: center;
 }
 
-header, h1, h2, h3, h4, h5, p{
-	margin: 12px;
-	font-size:155%;
-	text-align: left;
-	color: Grey;	
+#results-container, #bookshelf-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
 }
 
-
-.footer{
-  font-size: 16px;
-  padding: 20px;
-  text-align: center;
+.book-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
 }
 
-.fa {
-  padding: 5px;
-  font-size: 30px;
-  width:24px; 
-  height:24px;
-  text-align: center;
-  text-decoration: none;
-  margin: 5px 2px;
+.book-item img {
+    max-width: 100%;
 }
-
-.fa:hover {
-    opacity: 0.7;
-}
-
