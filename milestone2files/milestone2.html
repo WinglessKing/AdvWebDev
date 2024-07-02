@@ -5,15 +5,15 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
       <script>
          $(document).ready(function() {
-            $('#search-button').on('click', function() {
-               const searchTerm = $('#search-term').val();
+            $('#searchButton').on('click', function() {
+               const searchTerm = $('#keyTerm).val();
                const url = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`;
                $.getJSON(url, function(data) {
                   displayResults(data);
                });
          });
             function displayResults(data) {
-               const resultsContainer = $('#results-container');
+               const resultsContainer = $('#resultsDisplay');
                resultsContainer.empty();
                data.items.forEach((item, index) => {
                   if (index >= 60) return;
@@ -35,9 +35,11 @@
 <div class="nav">
    <a class="active" href="#home">Home</a>
    <a href="milestone2files/mybookshelf.html">My Bookshelf</a>
-   <input type="text" placeholder="Search..">
-   <button type="submit">Search</button>
+   <input type="text" id="keyTerm" placeholder="Search..">
+   <button type="submit" id="searchButton">Search</button>
 </div>
+      <div id="resultDisplay">
+      </div>
    
    </body>
 </html>
