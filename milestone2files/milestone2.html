@@ -25,7 +25,7 @@
     <div id="mainContainer"></div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-       $(document).ready(function() {
+      $(document).ready(function() {
     $('#searchButton').on('click', function() {
         const searchTerm = $('#keyTerm').val();
         const url = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`;
@@ -36,8 +36,8 @@
     });
 
     function displayResults(data) {
-        const results = $('mainContainer');
-        results.empty();
+        const resultsContainer = $('#mainContainer');
+        resultsContainer.empty();
 
         data.items.forEach((item, index) => {
             if (index >= 60) return;
@@ -45,16 +45,17 @@
             const book = item.volumeInfo;
             const bookElement = `
                 <div class="book-item">
-                    <h3><a href="bookdetails.html?id=${item.id}">${book.title}</a></h3>
+                    <h3><a href="book-details.html?id=${item.id}">${book.title}</a></h3>
                     <img src="${book.imageLinks?.thumbnail}" alt="${book.title}">
                 </div>
             `;
-            results.append(bookElement);
+            resultsContainer.append(bookElement);
         });
 
         // Add pagination here if needed
     }
 });
+
     </script>
         </div>
 </body>
