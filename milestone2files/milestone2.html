@@ -6,7 +6,7 @@
       <script>
          $(document).ready(function() {
             $('#searchButton').on('click', function() {
-               const searchTerm = $('#keyTerm).val();
+               const searchTerm = $('#keyTerm').val();
                const url = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`;
                $.getJSON(url, function(data) {
                   displayResults(data);
