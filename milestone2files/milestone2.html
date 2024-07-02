@@ -7,15 +7,13 @@
     <link rel="stylesheet" href="css/ms2style.css">
 </head>
 <body>
-        
-    <div id="search-container">
-        <input type="text" id="keyTerm" placeholder="Enter search term">
-        <button id="searchbButton">Search</button>
+   <div id="search-container">
+        <input type="text" id="search-term" placeholder="Enter search term">
+        <button id="search-button">Search</button>
     </div>
-    
-    <div id="mainContainer"></div>
-    
+    <div id="results-container"></div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script>
       $(document).ready(function() {
     $('#searchButton').on('click', function() {
