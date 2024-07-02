@@ -8,10 +8,10 @@
 </head>
 <body>
    <div id="search-container">
-        <input type="text" id="search-term" placeholder="Enter search term">
-        <button id="search-button">Search</button>
+        <input type="text" id="keyTerm" placeholder="Enter search term">
+        <button id="searchButton">Search</button>
     </div>
-    <div id="results-container"></div>
+    <div id="resultsContainer"></div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <script>
@@ -26,7 +26,7 @@
     });
 
     function displayResults(data) {
-        const resultsContainer = $('#mainContainer');
+        const resultsContainer = $('#resultsContainer');
         resultsContainer.empty();
 
         data.items.forEach((item, index) => {
