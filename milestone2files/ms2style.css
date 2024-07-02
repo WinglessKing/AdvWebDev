@@ -39,7 +39,7 @@
         }
         
         .bookCard {
-            border: 10px solid #ccc;
+            border: 5px solid red;
             padding: 5px;
             margin: 5px;
             width: 200px;
