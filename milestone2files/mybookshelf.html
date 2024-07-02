@@ -45,7 +45,7 @@
         data.items.forEach(item => {
             const book = item.volumeInfo;
             const bookElement = `
-                <div class="book-item">
+                <div class="bookCard">
                     <h3><a href="bookdetails.html?id=${item.id}">${book.title}</a></h3>
                     <img src="${book.imageLinks?.thumbnail}" alt="${book.title}">
                 </div>
