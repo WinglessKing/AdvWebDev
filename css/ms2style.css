@@ -40,7 +40,7 @@ nav ul li a:hover {
     padding: 20px;
 }
 
-.book-item {
+.bookCard {
     border: 1px solid #ccc;
     padding: 10px;
     margin: 10px;
@@ -48,6 +48,6 @@ nav ul li a:hover {
     text-align: center;
 }
 
-.book-item img {
+.bookCard img {
     max-width: 100%;
 }
