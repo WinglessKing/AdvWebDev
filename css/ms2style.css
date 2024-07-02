@@ -1,4 +1,4 @@
-/*General Formating*/
+/*General Formatting*/
 body {
     font-family: Arial, sans-serif;
     padding: 0;
@@ -8,7 +8,7 @@ body {
 }
 
 /*Navbar*/
-nav ul{
+#nav ul{
 	float:left; 
 	list-style-type: none;
 	margin:0;
