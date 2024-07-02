@@ -7,23 +7,33 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="main-menu-container"></div>
-
+    <div class="row">
+        <div id="nav">
+             <nav>
+               <ul>
+                  <li><a href ="#about">About Me</a></li>
+                  <li><a href ="#experience">Work Experience</a></li>
+                  <li><a href ="#projects">Projects</a></li>
+               </ul>
+            </nav>
+        </div>
+        
     <div id="search-container">
-        <input type="text" id="search-term" placeholder="Enter search term">
-        <button id="search-button">Search</button>
+        <input type="text" id="keyTerm" placeholder="Enter search term">
+        <button id="searchbButton">Search</button>
     </div>
-    <div id="results-container"></div>
+        
+    <div id="main"></div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            $("#main-menu-container").load("main-menu.html");
+            $("#main").load("milestone2.html");
         });
     </script>
     <script>
        $(document).ready(function() {
-    $('#search-button').on('click', function() {
-        const searchTerm = $('#search-term').val();
+    $('#searchButton').on('click', function() {
+        const searchTerm = $('#keyTerm').val();
         const url = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`;
         
         $.getJSON(url, function(data) {
@@ -32,8 +42,8 @@
     });
 
     function displayResults(data) {
-        const resultsContainer = $('#results-container');
-        resultsContainer.empty();
+        const results = $('main');
+        results.empty();
 
         data.items.forEach((item, index) => {
             if (index >= 60) return;
@@ -45,7 +55,7 @@
                     <img src="${book.imageLinks?.thumbnail}" alt="${book.title}">
                 </div>
             `;
-            resultsContainer.append(bookElement);
+            results.append(bookElement);
         });
 
         // Add pagination here if needed
