@@ -1,34 +1,48 @@
 <!DOCTYPE html>
-<html lang ="en">
-   <head>
-      <link rel="stylesheet" href="css/ms2style.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-      <script>
-         $(document).ready(function() {
-           const userId = '112484254300932813469'; // Your User ID
-           const bookshelfId = '1001'; // Your Bookshelf ID
-           const url = `https://www.googleapis.com/books/v1/users/${userId}/bookshelves/${bookshelfId}/volumes`;
-           
-           console.log('Fetching bookshelf books from:', url); // Debugging line
-           
-           $.getJSON(url, function(data) {
-             console.log('Bookshelf API Response:', data); // Debugging line
-             displayBookshelf(data);
-           }).fail(function(jqXHR, textStatus, errorThrown) {
-             console.error('API Request Failed:', textStatus, errorThrown); // Debugging line
-           });
-           function displayBookshelf(data) {
-             const bookshelfContainer = $('#bookshelf-container');
-             bookshelfContainer.empty();
-             
-             if (!data.items || data.items.length === 0) {
-               bookshelfContainer.append('<p>No books found in this bookshelf.</p>'); // Debugging line
-               return;
-             }
-             
-             data.items.forEach(item => {
-               const book = item.volumeInfo;
-               const bookElement = `
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Bookshelf</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="main-menu-container"></div>
+    
+    <div id="bookshelf-container"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#main-menu-container").load("main-menu.html");
+        });
+    </script>
+    <script>
+       $(document).ready(function() {
+    const userId = '112484254300932813469'; // Your User ID
+    const bookshelfId = '1001'; // Your Bookshelf ID
+    const url = `https://www.googleapis.com/books/v1/users/${userId}/bookshelves/${bookshelfId}/volumes`;
+
+    console.log('Fetching bookshelf books from:', url); // Debugging line
+
+    $.getJSON(url, function(data) {
+        console.log('Bookshelf API Response:', data); // Debugging line
+        displayBookshelf(data);
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.error('API Request Failed:', textStatus, errorThrown); // Debugging line
+    });
+
+    function displayBookshelf(data) {
+        const bookshelfContainer = $('#bookshelf-container');
+        bookshelfContainer.empty();
+
+        if (!data.items || data.items.length === 0) {
+            bookshelfContainer.append('<p>No books found in this bookshelf.</p>'); // Debugging line
+            return;
+        }
+
+        data.items.forEach(item => {
+            const book = item.volumeInfo;
+            const bookElement = `
                 <div class="book-item">
                     <h3><a href="book-details.html?id=${item.id}">${book.title}</a></h3>
                     <img src="${book.imageLinks?.thumbnail}" alt="${book.title}">
@@ -39,19 +53,7 @@
     }
 });
 
-      </script>
-   </head>
-   
-   <body>
-<div class="nav">
-   <a class="active" href="#home">Home</a>
-   <a href="milestone2files/mybookshelf.html">My Bookshelf</a>
-   <input type="text" id="keyTerm" placeholder="Search..">
-   <button type="submit" id="searchButton">Search</button>
-</div>
-     
-      <div id="myBookshelf">
-      </div>
-   
-   </body>
+
+    </script>
+</body>
 </html>
