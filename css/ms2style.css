@@ -1,39 +1,105 @@
-
-/* Add a black background color to the top navigation bar */
-.topnav {
-  overflow: hidden;
-  background-color: #e9e9e9;
+/*Navbar*/
+nav ul{
+	float:left; 
+	list-style-type: none;
+	margin:0;
+	padding:0;
+	overflow:hidden;
+	color:#2272FF; /*Neon Blue*/
 }
 
-/* Style the links inside the navigation bar */
-.topnav a {
-  float: left;
-  display: block;
-  color: black;
+a{
+	display: contents;
+	overflow: hidden;
+	padding: 10px;
+  	padding: 14px 16px;
+  	text-decoration:none;
+	font-size: 20px;
+}
+		
+li a:hover {
+  background-color: #3C454B;
+}
+
+li img{
+	width:150px;
+}
+
+/* Layout */
+.row {  
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.column {  
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.badge {
+  flex: 20%;
+  background-color: black;
+  padding: 20px;
+}
+.card {
+  flex: 70%;
+  /*align-items: stretch;*/
+  background-color: black;
+  padding: 20px;	
+}
+.main {
+  flex: 70%;
+  background-color: black;
+  padding: 20px;
+}
+
+@media (max-width: 800px) {
+  .badge, .main {   
+    flex:100%
+  }
+}
+/*General Formats*/
+ul {
+	list-style-type: none;
+	display:inline-block;
+	margin:0;
+	overflow:hidden;
+	color: grey;
+}
+
+li{
+	padding: 5px;
+}
+body{
+	margin: 0px;
+	background-color: black;
+}
+
+header, h1, h2, h3, h4, h5, p{
+	margin: 12px;
+	font-size:155%;
+	text-align: left;
+	color: Grey;	
+}
+
+
+.footer{
+  font-size: 16px;
+  padding: 20px;
   text-align: center;
-  padding: 14px 16px;
+}
+
+.fa {
+  padding: 5px;
+  font-size: 30px;
+  width:24px; 
+  height:24px;
+  text-align: center;
   text-decoration: none;
-  font-size: 17px;
+  margin: 5px 2px;
 }
 
-/* Change the color of links on hover */
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
+.fa:hover {
+    opacity: 0.7;
 }
 
-/* Style the "active" element to highlight the current page */
-.topnav a.active {
-  background-color: #2196F3;
-  color: white;
-}
-
-/* Style the search box inside the navigation bar */
-.topnav input[type=text] {
-  float: right;
-  padding: 6px;
-  border: none;
-  margin-top: 8px;
-  margin-right: 16px;
-  font-size: 17px;
-}
