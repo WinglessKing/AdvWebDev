@@ -7,13 +7,15 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="main-menu-container"></div>
+    <div class="row">
+        <div class="badge"></div>
+        <div id="main"></div>
     
-    <div id="bookshelf-container"></div>
+    <div id="bookshelfContainer"></div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            $("#main-menu-container").load("main-menu.html");
+            $("#main").load("milestone2.html");
         });
     </script>
     <script>
@@ -32,7 +34,7 @@
     });
 
     function displayBookshelf(data) {
-        const bookshelfContainer = $('#bookshelf-container');
+        const bookshelfContainer = $('#bookshelfContainer');
         bookshelfContainer.empty();
 
         if (!data.items || data.items.length === 0) {
