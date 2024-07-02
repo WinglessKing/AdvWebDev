@@ -1,51 +1,75 @@
 <!DOCTYPE html>
-<html lang ="en">
-   <head>
-       <link rel="stylesheet" href="css/ms2style.css">
-      <title>Book Details</title>
-   </head>
-   
-      <div class="nav">
-         <a class="active" href="#home">Home</a>
-         <a href="milestone2files/mybookshelf.html">My Bookshelf</a>
-      </div>
-   
-   <body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script> 
+</head>
+<body>
+    <div id="main-menu-container"></div>
+
+    <div id="book-details-container"></div>
+    <div id="viewerCanvas" style="width: 600px; height: 500px; margin: auto;"></div>
+    <p id="test-message">Testin 4.</p>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#main-menu-container").load("main-menu.html");
+        });
+    </script>
     <script>
        $(document).ready(function() {
-          console.log("Document ready, fetching JSON data...");
-            $.getJSON('JSONFiles/google-books-book.json')
-                .done(function(data) {
-                    console.log("JSON data received:", data);
-                    const book = data.volumeInfo;
-                    $('#book').html(`
-                        <div class="book-details">
-                            <img src="${book.imageLinks.thumbnail}" alt="${book.title}">
-                            <div>
-                                <h2>${book.title}</h2>
-                                <p><strong>Authors:</strong> ${book.authors.join(', ')}</p>
-                                <p><strong>Published Date:</strong> ${book.publishedDate}</p>
-                                <p>${book.description}</p>
-                            </div>
-                        </div>
-                    `);
-                })
-                .fail(function(jqxhr, textStatus, error) {
-                    console.error("Request Failed: " + textStatus + ", " + error);
-                });
-        });
-    
-  </script>  
-<div id="main">
-        <div class="book-details">
-          <img src="http://books.google.com/books/content?id=Wfan6L9RGgYC&amp;printsec=frontcover&amp;img=1&amp;zoom=1&amp;edge=curl&amp;imgtk=AFLRE712MmwfNKmdFnYcJvZaa1rX1UpJIammDm7hgap5cxEChWlONyCM3NNqJ1xNSo5TTjnkoeUx0bwSKCv_2DMSHq8BDDo3W1C6VPP-5MR2vF13LdxO09KGV8sIvkD1iruR1CkCblhV&amp;source=gbs_api" alt="Book Cover">
-          <div class="details">
-            <h2>${title}</h2>
-            <p><strong>Authors:</strong> Peter Gasston</p>
-            <p><strong>Description:</strong> </p><p><b>A Guide to Modern Web Development</b><br></p><p>Today's web technologies are evolving at near-light speed, bringing the promise of a seamless Internet ever closer to reality. When users can browse the Web on a three-inch phone screen as easily as on a fifty-inch HDTV, what's a developer to do?</p><p>Peter Gasston's <i>The Modern Web</i> will guide you through the latest and most important tools of device-agnostic web development, including HTML5, CSS3, and JavaScript. His plain-English explanations and practical examples emphasize the techniques, principles, and practices that you'll need to easily transcend individual browser quirks and stay relevant as these technologies are updated.</p><p>Learn how to:</p><p>* Plan your content so that it displays fluidly across multiple devices<br>* Design websites to interact with devices using the most up-to-date APIs, including Geolocation, Orientation, and Web Storage<br>* Incorporate cross-platform audio and video without using troublesome plug-ins<br>* Make images and graphics scalable on high-resolution devices with SVGUse powerful HTML5 elements to design better forms</p><p>Turn outdated websites into flexible, user-friendly ones that take full advantage of the unique capabilities of any device or browser. With the help of <i>The Modern Web</i>, you'll be ready to navigate the front lines of device-independent development.</p><p></p>
-          </div>
-        </div>
-      </div>
-   
-   </body>
+    console.log('Document is ready'); // Debugging line
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const bookId = urlParams.get('id');
+    const url = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
+
+    console.log('Fetching book details from:', url); // Debugging line
+
+    $.getJSON(url, function(data) {
+        console.log('Book API Response:', data); // Debugging line
+        displayBookDetails(data);
+        initializeBookViewer(bookId); // Initialize the book viewer with the volume ID
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.error('API Request Failed:', textStatus, errorThrown); // Debugging line
+    });
+
+    function displayBookDetails(data) {
+        console.log('Displaying book details'); // Debugging line
+        const book = data.volumeInfo;
+        const bookDetailsContainer = $('#book-details-container');
+
+        const bookDetails = `
+            <h1>${book.title}</h1>
+            <img src="${book.imageLinks?.thumbnail}" alt="${book.title}">
+            <p><strong>Authors:</strong> ${book.authors.join(', ')}</p>
+            <p><strong>Publisher:</strong> ${book.publisher}</p>
+            <p><strong>Published Date:</strong> ${book.publishedDate}</p>
+            <p><strong>Description:</strong> ${book.description}</p>
+            <p><strong>Price:</strong> ${book.saleInfo?.listPrice?.amount || 'Not available'}</p>
+        `;
+        bookDetailsContainer.append(bookDetails);
+    }
+
+    function initializeBookViewer(volumeId) {
+        console.log('Initializing book viewer with volume ID:', volumeId); // Debugging line
+        google.books.load();
+
+        function initialize() {
+            var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
+            viewer.load(volumeId, alertNotFound);
+        }
+
+        google.books.setOnLoadCallback(initialize);
+
+        function alertNotFound() {
+            alert("Could not embed the book!"); // Alert the user if the book cannot be embedded
+        }
+    }
+});
+    </script>
+</body>
 </html>
