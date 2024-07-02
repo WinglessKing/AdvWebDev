@@ -4,9 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Details</title>
-    <link rel="stylesheet" href="styles.css">
-    <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script> 
+    <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+    <style>
+body {
+  background-color: grey;
+}
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    background-color: #333;
+    overflow: hidden;
+}
+
+nav ul li {
+    float: left;
+}
+
+nav ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+nav ul li a:hover {
+    background-color: #111;
+}
+
+#searchContainer {
+    padding: 20px;
+    text-align: center;
+}
+
+#resultsContainer, #bookshelfContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.bookCard {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: 200px;
+    text-align: center;
+}
+
+.bookCard img {
+    max-width: 100%;
+}
+
 </head>
+    
 <body>
     <div id="main-menu-container"></div>
 
@@ -14,11 +65,6 @@
     <div id="viewerCanvas" style="width: 600px; height: 500px; margin: auto;"></div>
     <p id="test-message">Testin 4.</p>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("#main-menu-container").load("main-menu.html");
-        });
-    </script>
     <script>
        $(document).ready(function() {
     console.log('Document is ready'); // Debugging line
