@@ -29,6 +29,7 @@
         #searchContainer {
             padding: 20px;
             text-align: center;
+            border: 10px solid #2f1209:    
         }
         
         #resultsContainer, #bookshelfContainer {
