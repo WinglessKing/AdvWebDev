@@ -3,63 +3,6 @@
    <head>
        <link rel="stylesheet" href="css/ms2style.css">
       <title>Book Details</title>
-          <style>
-
-      .book-info {
-        display: flex;
-        margin: 20px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-      }
-      .book-info img {
-        width: 200px;
-        height: 300px;
-        margin-right: 20px;
-      }
-      .book-info .details {
-        flex: 1;
-      }
-
-      <!-- This is to center the webpage -->
-
-      .content {
-      max-width: 1000px;
-
-      margin: auto;
-      }
-
-      .textformat {
-
-    }
-
-    h1 {
-    text-align: center;
-
-    color: #4CAF50;
-    font-family: Garamond;
-    font-size: 50px;
-    padding:0px;
-    margin: 0px;
-
-    }
-
-    p {
-
-    text-align: left;
-    letter-spacing: 2.5px;
-    font-family: Garamond;
-    font-size: 22px;
-    border-style: dotted dashed solid double;
-    padding: 30px;
-
-    }
-
-    a {
-    text-decoration: none;
-    color: #008CBA;
-    }
-</style>
    </head>
    
       <div class="nav">
@@ -68,8 +11,33 @@
       </div>
    
    <body>
-<div id="book-container">
-        <div class="book-info">
+    <script>
+       $(document).ready(function() {
+          console.log("Document ready, fetching JSON data...");
+            $.getJSON('JSONFiles/google-books-book.json')
+                .done(function(data) {
+                    console.log("JSON data received:", data);
+                    const book = data.volumeInfo;
+                    $('#book').html(`
+                        <div class="book-details">
+                            <img src="${book.imageLinks.thumbnail}" alt="${book.title}">
+                            <div>
+                                <h2>${book.title}</h2>
+                                <p><strong>Authors:</strong> ${book.authors.join(', ')}</p>
+                                <p><strong>Published Date:</strong> ${book.publishedDate}</p>
+                                <p>${book.description}</p>
+                            </div>
+                        </div>
+                    `);
+                })
+                .fail(function(jqxhr, textStatus, error) {
+                    console.error("Request Failed: " + textStatus + ", " + error);
+                });
+        });
+    
+  </script>  
+<div id="main">
+        <div class="book-details">
           <img src="http://books.google.com/books/content?id=Wfan6L9RGgYC&amp;printsec=frontcover&amp;img=1&amp;zoom=1&amp;edge=curl&amp;imgtk=AFLRE712MmwfNKmdFnYcJvZaa1rX1UpJIammDm7hgap5cxEChWlONyCM3NNqJ1xNSo5TTjnkoeUx0bwSKCv_2DMSHq8BDDo3W1C6VPP-5MR2vF13LdxO09KGV8sIvkD1iruR1CkCblhV&amp;source=gbs_api" alt="Book Cover">
           <div class="details">
             <h2>${title}</h2>
@@ -78,43 +46,6 @@
           </div>
         </div>
       </div>
-<script>
-    // Fetch and display book information
-    fetch('https://www.googleapis.com/books/v1/volumes/Wfan6L9RGgYC')
-      .then(response => response.json())
-      .then(data => {
-        console.log(data); // Check the console to see the structure of the data
-        // Call function to display data on the webpage
-        displayBookInfo(data);
-      })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
-
-    function displayBookInfo(bookData) {
-      // Extract relevant information from the bookData
-      const title = bookData.volumeInfo.title;
-      const authors = bookData.volumeInfo.authors.join(', ');
-      const description = bookData.volumeInfo.description;
-      const thumbnail = bookData.volumeInfo.imageLinks.thumbnail;
-
-      // Construct HTML elements to display the book information
-      const bookInfoHTML = `
-        <div class="book-info">
-          <img src="${thumbnail}" alt="Book Cover">
-          <div class="details">
-            <h2>${title}</h2>
-            <p><strong>Authors:</strong> ${authors}</p>
-            <p><strong>Description:</strong> ${description}</p>
-          </div>
-        </div>
-      `;
-
-      // Append the HTML to a container on the webpage (e.g., a div with id="book-container")
-      document.getElementById('book.info').innerHTML = bookInfoHTML;
-    }
-  </script>
-     </div>
    
    </body>
 </html>
