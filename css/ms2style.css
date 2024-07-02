@@ -34,7 +34,7 @@ nav ul li a:hover {
     text-align: center;
 }
 
-#results-container, #bookshelf-container {
+#resultsContainer, #bookshelf-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
