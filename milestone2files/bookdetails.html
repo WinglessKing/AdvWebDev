@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Details</title>
-    <link rel="stylesheet" href="ms2style.css">
-    <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Book Details</title>
+        <link rel="stylesheet" href="ms2style.css">
+        <script type="text/javascript" src="https://www.google.com/books/jsapi.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
     
     <body>
         <nav>
@@ -18,60 +18,57 @@
         </nav>
         
         <div id="bookDetailsContainer"></div>
-        <div id="viewerCanvas" style="width: 600px; height: 500px; margin: auto;"></div>
+        <div id="viewer" style="width: 600px; height: 500px; margin: auto;"></div>
 
+        <script>
+            $(document).ready(function() {
+                console.log('Document is ready');
+                const urlParams = new URLSearchParams(window.location.search);
+                const bookId = urlParams.get('id');
+                const url = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
+                console.log('Fetching book details from:', URL);
+                
+                $.getJSON(url, function(data) {
+                    console.log('Book API Response:', data); // Debugging line
+                    displayBookDetails(data);
+                    initializeBookViewer(bookId); // Initialize the book viewer with the volume ID
+                }).fail(function(jqXHR, textStatus, errorThrown) {
+                    console.error('API Request Failed:', textStatus, errorThrown); // Debugging line
+                });
+
+                function displayBookDetails(data) {
+                console.log('Displaying book details'); // Debugging line
+                const book = data.volumeInfo;
+                const bookDetailsContainer = $('#bookDetailsContainer');
+    
+                const bookDetails = `
+                    <h1>${book.title}</h1>
+                    <img src="${book.imageLinks?.thumbnail}" alt="${book.title}">
+                    <p><strong>Authors:</strong> ${book.authors.join(', ')}</p>
+                    <p><strong>Publisher:</strong> ${book.publisher}</p>
+                    <p><strong>Published Date:</strong> ${book.publishedDate}</p>
+                    <p><strong>Description:</strong> ${book.description}</p>
+                    <p><strong>Price:</strong> ${book.saleInfo?.listPrice?.amount || 'Not available'}</p>
+                `;
+                bookDetailsContainer.append(bookDetails);
+                }
+    
+                    function initializeBookViewer(volumeId) {
+                        console.log('Initializing book viewer with volume ID:', volumeId); // Debugging line
+                        google.books.load();
         
-    <script>
-$(document).ready(function() {
-    console.log('Document is ready'); // Debugging line
-
-    const urlParams = new URLSearchParams(window.location.search);
-    const bookId = urlParams.get('id');
-    const url = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
-
-    console.log('Fetching book details from:', url); // Debugging line
-
-    $.getJSON(url, function(data) {
-        console.log('Book API Response:', data); // Debugging line
-        displayBookDetails(data);
-        initializeBookViewer(bookId); // Initialize the book viewer with the volume ID
-    }).fail(function(jqXHR, textStatus, errorThrown) {
-        console.error('API Request Failed:', textStatus, errorThrown); // Debugging line
-    });
-
-    function displayBookDetails(data) {
-        console.log('Displaying book details'); // Debugging line
-        const book = data.volumeInfo;
-        const bookDetailsContainer = $('#bookDetailsContainer');
-
-        const bookDetails = `
-            <h1>${book.title}</h1>
-            <img src="${book.imageLinks?.thumbnail}" alt="${book.title}">
-            <p><strong>Authors:</strong> ${book.authors.join(', ')}</p>
-            <p><strong>Publisher:</strong> ${book.publisher}</p>
-            <p><strong>Published Date:</strong> ${book.publishedDate}</p>
-            <p><strong>Description:</strong> ${book.description}</p>
-            <p><strong>Price:</strong> ${book.saleInfo?.listPrice?.amount || 'Not available'}</p>
-        `;
-        bookDetailsContainer.append(bookDetails);
-    }
-
-    function initializeBookViewer(volumeId) {
-        console.log('Initializing book viewer with volume ID:', volumeId); // Debugging line
-        google.books.load();
-
-        function initialize() {
-            var viewer = new google.books.DefaultViewer(document.getElementById('viewerCanvas'));
-            viewer.load(volumeId, alertNotFound);
-        }
-
-        google.books.setOnLoadCallback(initialize);
-
-        function alertNotFound() {
-            alert("Could not embed the book!"); // Alert the user if the book cannot be embedded
-        }
-    }
-});
-    </script>
-</body>
+                    function initialize() {
+                        var viewer = new google.books.DefaultViewer(document.getElementById('viewer'));
+                        viewer.load(volumeId, alertNotFound);
+                    }
+        
+                    google.books.setOnLoadCallback(initialize);
+        
+                    function alertNotFound() {
+                        alert("Could not embed the book!"); // Alert the user if the book cannot be embedded
+                    }
+                }
+            });
+        </script>
+    </body>
 </html>
