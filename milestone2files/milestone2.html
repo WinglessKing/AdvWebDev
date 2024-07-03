@@ -1,57 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="ms2style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>Book Search</title>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Book Search</title>
+        <link rel="stylesheet" href="ms2style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
     
-<body>
+    <body>
         <nav>
             <ul>
                 <li><a href ="milestone2.html">Book Search</a></li>
                 <li><a href ="mybookshelf.html">My Bookshelf</a></li>
             </ul>
         </nav>
-    
-   <div id="searchContainer">
-        <input type="text" id="keyTerm" placeholder="Enter search term">
-        <button id="searchButton">Search</button>
-    </div>
-    <div id="resultsContainer"></div>
-    
-    <script>
-      $(document).ready(function() {
-    $('#searchButton').on('click', function() {
-        const searchTerm = $('#keyTerm').val();
-        const url = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`;
         
-        $.getJSON(url, function(data) {
-            displayResults(data);
-        });
-    });
-
-    function displayResults(data) {
-        const resultsContainer = $('#resultsContainer');
-        resultsContainer.empty();
-
-        data.items.forEach((item, index) => {
-            if (index >= 60) return;
-
-            const book = item.volumeInfo;
-            const bookElement = `
-                <div class="bookCard">
-                    <h3><a href="bookdetails.html?id=${item.id}">${book.title}</a></h3>
-                    <img src="${book.imageLinks?.thumbnail}" alt="${book.title}">
-                </div>
-            `;
-            resultsContainer.append(bookElement);
-        });
-    }
-      });
-
-    </script>
-</body>
+        <div id="searchContainer">
+            <input type="text" id="keyTerm" placeholder="Enter search term">
+            <button id="searchButton">Search</button>
+        </div>
+        <div id="resultsContainer"></div>
+        
+        <script>
+            $(document).ready(function() {
+                $('#searchButton').on('click', function() {
+                    const searchTerm = $('#keyTerm').val();
+                    const url = `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}`;
+                    $.getJSON(url, function(data) {
+                        displayResults(data);
+                    });
+                });
+                function displayResults(data) {
+                    const resultsContainer = $('#resultsContainer');
+                    resultsContainer.empty();
+                    data.items.forEach((item, index) => {
+                        if (index >= 60) return;
+                        const book = item.volumeInfo;
+                        const bookElement = `
+                        <div class="bookCard">
+                        <h3><a href="bookdetails.html?id=${item.id}">${book.title}</a></h3>
+                        <img src="${book.imageLinks?.thumbnail}" alt="${book.title}">
+                        </div>
+                        `;
+                        resultsContainer.append(bookElement);
+                    });
+                }
+          });
+        </script>
+    </body>
 </html>
