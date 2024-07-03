@@ -29,15 +29,15 @@
                 console.log('Fetching book details from:', URL);
                 
                 $.getJSON(url, function(data) {
-                    console.log('Book API Response:', data); // Debugging line
+                    console.log('Book API Response:', data); // Debug 
                     displayBookDetails(data);
-                    initializeBookViewer(bookId); // Initialize the book viewer with the volume ID
+                    initializeBookViewer(bookId); 
                 }).fail(function(jqXHR, textStatus, errorThrown) {
-                    console.error('API Request Failed:', textStatus, errorThrown); // Debugging line
+                    console.error('API Request Failed:', textStatus, errorThrown); // Debug
                 });
 
                 function displayBookDetails(data) {
-                console.log('Displaying book details'); // Debugging line
+                console.log('Displaying book details'); // Debug
                 const book = data.volumeInfo;
                 const bookDetailsContainer = $('#bookDetailsContainer');
     
@@ -54,7 +54,7 @@
                 }
     
                     function initializeBookViewer(volumeId) {
-                        console.log('Initializing book viewer with volume ID:', volumeId); // Debugging line
+                        console.log('Initializing book viewer with volume ID:', volumeId); // Debug
                         google.books.load();
         
                     function initialize() {
