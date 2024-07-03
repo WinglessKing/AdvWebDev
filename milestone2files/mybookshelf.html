@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
         <title>My Bookshelf</title>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" href="ms2style.css">
@@ -19,16 +18,16 @@
         <div id="bookshelfContainer"></div>
         <script>
            $(document).ready(function() {
-                const userId = '112484254300932813469'; // Your User ID
-                const bookshelfId = '1001'; // Your Bookshelf ID
+                const userId = '112484254300932813469'; // User ID
+                const bookshelfId = '1001'; // Bookshelf ID
                 const url = `https://www.googleapis.com/books/v1/users/${userId}/bookshelves/${bookshelfId}/volumes`;
-                console.log('Fetching bookshelf books from:', url); // Debugging line
+                console.log('Fetching bookshelf books from:', url); // Debug
     
                 $.getJSON(url, function(data) {
-                    console.log('Bookshelf API Response:', data); // Debugging line
+                    console.log('Bookshelf API Response:', data);
                     displayBookshelf(data);
                 }).fail(function(jqXHR, textStatus, errorThrown) {
-                    console.error('API Request Failed:', textStatus, errorThrown); // Debugging line
+                    console.error('API Request Failed:', textStatus, errorThrown); 
                 });
     
             function displayBookshelf(data) {
@@ -36,7 +35,7 @@
                 bookshelfContainer.empty();
     
                 if (!data.items || data.items.length === 0) {
-                    bookshelfContainer.append('<p>No books found in this bookshelf.</p>'); // Debugging line
+                    bookshelfContainer.append('<p>No books found in this bookshelf.</p>'); 
                 return;
                 }
     
