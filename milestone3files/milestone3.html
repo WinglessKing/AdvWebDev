@@ -1,26 +1,29 @@
 <!DOCTYPE html>
-<html lang ="en">
-
-   <body>
-     <h1>Adrey'n Lewis</h1>
-        <h2>Kennesaw State 24'</h2>
-            <p>This is for my Advanced Web Development course. I am a student pursuing a BS in Information Technology and expected to graduate in 2024</p>
-  <div class="main">
-     <section id="about">
-        Course Information: IT4403 ADVANCED WEB AND MOBILE APPLICATIONS
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Book Search</title>
+        <link rel="stylesheet" href="ms2style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    
+    <body>
         <nav>
-               <ul>
-                  <li><a href ="index.html">Home</a></li>
-                  <li><a href ="milestone1.html">Milestone 1</a></li>
-                  <li><a href ="milestone2.html">Milestone 2</a></li>
-                  <li><a href ="milestone4.html">Milestone 4</a></li>
-               </ul>
-            </nav>
-  </div>
-  
-   <div class="footer">
-     <p> Visit the <a href="https://ccse.kennesaw.edu/it/"> this link </a><b>to navigate to the KSU IT Department website</b> </p>
-   </div>   
-</div>      
-   </body>
+            <ul>
+                <li><a href ="milestone2.html">Book Search</a></li>
+                <li><a href ="mybookshelf.html">My Bookshelf</a></li>
+            </ul>
+        </nav>
+        
+        <div id="searchContainer">
+            <input type="text" id="keyTerm" placeholder="Enter search term">
+            <button id="searchButton">Search</button>
+        </div>
+        <div id="resultsContainer"></div>
+        
+      
+    </body>
 </html>
+
