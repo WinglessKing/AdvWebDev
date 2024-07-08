@@ -60,8 +60,8 @@ $(document).ready(function() {
     }
 
     function setupPagination() {
-        let paginationContainer = $("#pagination-container");
-        paginationContainer.empty();
+        let paginationCard = $("#paginationCard");
+        paginationCard.empty();
         let totalPages = Math.ceil(searchResults.length / itemsPerPage);
         console.log('Total pages:', totalPages);  // Debug log
 
@@ -72,10 +72,10 @@ $(document).ready(function() {
                 if (i === currentPage) {
                     pageLink.addClass('active');
                 }
-                paginationContainer.append(pageLink);
+                paginationCard.append(pageLink);
             }
         } else {
-            paginationContainer.append('<span class="page-link active">1</span>');
+            paginationCard.append('<span class="page-link active">1</span>');
         }
     }
 
