@@ -67,19 +67,19 @@ $(document).ready(function() {
 
         if (totalPages > 1) {
             for (let i = 1; i <= totalPages; i++) {
-                let pageLink = $('<span class="page-link">' + i + '</span>');
-                pageLink.data('page', i);
+                let pageNum = $('<span class="pageNum">' + i + '</span>');
+                pageNum.data('page', i);
                 if (i === currentPage) {
-                    pageLink.addClass('active');
+                    pageNum.addClass('active');
                 }
-                paginationCard.append(pageLink);
+                paginationCard.append(pageNum);
             }
         } else {
-            paginationCard.append('<span class="page-link active">1</span>');
+            paginationCard.append('<span class="pageNum active">1</span>');
         }
     }
 
-    $(document).on('click', '.page-link', function() {
+    $(document).on('click', '.pageNum', function() {
         currentPage = $(this).data('page');
         console.log('Navigating to page:', currentPage);  // Debug log
         displaySearchResults();
