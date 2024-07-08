@@ -4,27 +4,6 @@ $(document).ready(function() {
     let searchResults = [];
     const maxResultsPerRequest = 40; // Google Books API limit
 
-    // Book search functionality
-    $("#search-button").click(function() {
-        var searchTerm = $("#search-term").val();
-        console.log('Search term:', searchTerm);  // Debug log
-        if (searchTerm) {
-            searchResults = [];
-            currentPage = 1;
-            fetchResults(searchTerm, 0, maxResultsPerRequest, function() {
-                if (searchResults.length < 50) {
-                    fetchResults(searchTerm, 40, 10, function() {
-                        displaySearchResults();
-                        setupPagination();
-                    });
-                } else {
-                    displaySearchResults();
-                    setupPagination();
-                }
-            });
-        }
-    });
-
     function fetchResults(searchTerm, startIndex, maxResults, callback) {
         $.ajax({
             url: `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&startIndex=${startIndex}&maxResults=${maxResults}`,
