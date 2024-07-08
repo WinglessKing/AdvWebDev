@@ -5,9 +5,9 @@ $(document).ready(function() {
     const maxResultsPerRequest = 40; // Google Books API limit
 
     // Book search functionality
-    $("#search-button").click(function() {
-        var searchTerm = $("#search-term").val();
-        console.log('Search term:', searchTerm);  // Debug log
+    $("#searchButton").click(function() {
+        var searchTerm = $("#keyTerm").val();
+        console.log('Key term:', searchTerm);  // Debug log
         if (searchTerm) {
             searchResults = [];
             currentPage = 1;
@@ -42,7 +42,7 @@ $(document).ready(function() {
     }
 
     function displaySearchResults() {
-        let resultsContainer = $("#results-container");
+        let resultsContainer = $("#resultsContainer");
         resultsContainer.empty();
         let startIndex = (currentPage - 1) * itemsPerPage;
         let endIndex = startIndex + itemsPerPage;
@@ -50,7 +50,7 @@ $(document).ready(function() {
         console.log('Displaying results:', paginatedResults);  // Debug log
 
         paginatedResults.forEach(function(book) {
-            var bookItem = $('<div class="book-item" data-id="' + book.id + '"></div>');
+            var bookItem = $('<div class="bookCard" data-id="' + book.id + '"></div>');
             bookItem.append('<h3>' + book.volumeInfo.title + '</h3>');
             if (book.volumeInfo.imageLinks) {
                 bookItem.append('<img src="' + book.volumeInfo.imageLinks.thumbnail + '" alt="' + book.volumeInfo.title + '">');
@@ -60,8 +60,8 @@ $(document).ready(function() {
     }
 
     function setupPagination() {
-        let paginationContainer = $("#pagination-container");
-        paginationContainer.empty();
+        let paginationCard = $("#paginationCard");
+        paginationCard.empty();
         let totalPages = Math.ceil(searchResults.length / itemsPerPage);
         console.log('Total pages:', totalPages);  // Debug log
 
@@ -72,10 +72,10 @@ $(document).ready(function() {
                 if (i === currentPage) {
                     pageLink.addClass('active');
                 }
-                paginationContainer.append(pageLink);
+                paginationCard.append(pageLink);
             }
         } else {
-            paginationContainer.append('<span class="page-link active">1</span>');
+            paginationCard.append('<span class="page-link active">1</span>');
         }
     }
 
