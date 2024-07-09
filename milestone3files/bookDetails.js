@@ -1,14 +1,9 @@
  $(document).on('click', '.bookCard', function() {
         var bookId = $(this).data('id');
         var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
-        var containerId = isBookshelfItem ? '#bookshelfDetailsContainer' : '#bookDetailsContainer';
+        var containerId = isBookshelfItem ? '#bookDetailsContainer' : '#bookDetailsContainer';
         fetchBookDetails(bookId, containerId);
-        
-        
-    $('html, body').animate({
-        scrollTop: $(containerId).offset().top
-    }, 1000); 
-    });
+
 function fetchBookDetails(bookId, containerId) {
         $.ajax({
             url: 'https://www.googleapis.com/books/v1/volumes/' + bookId,
