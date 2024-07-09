@@ -20,15 +20,6 @@
                 return;
                 }
     
-                    data.items.forEach(item => {
-                        const book = item.volumeInfo;
-                        const bookElement = `
-                        <div class="bookCard">
-                            <h3><a href="#bookDetailsContainer?id=${item.id}">${book.title}</a></h3>
-                            <img src="${book.imageLinks?.thumbnail}" alt="${book.title}">
-                        </div>
-                        `;
-                    bookshelfContainer.append(bookElement);
-                    });
-                }
+
+             }
             });
