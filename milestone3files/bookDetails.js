@@ -1,10 +1,21 @@
- $(document).on('click', '.bookCard', function() {
+$('html, body').animate({
+        scrollTop: $(containerId).offset().top
+    }, 1000); 
+    });
+
+    $(document).on('click', '.bookCard', function() {
         var bookId = $(this).data('id');
         var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
-        var containerId = isBookshelfItem ? '#bookDetailsContainer' : '#bookDetailsContainer';
+        var containerId = isBookshelfItem ? '#bookshelfDetailsContainer' : '#bookDetailsContainer';
         fetchBookDetails(bookId, containerId);
+        
+        
+    $('html, body').animate({
+        scrollTop: $(containerId).offset().top
+    }, 1000); 
+    });
 
-function fetchBookDetails(bookId, containerId) {
+    function fetchBookDetails(bookId, containerId) {
         $.ajax({
             url: 'https://www.googleapis.com/books/v1/volumes/' + bookId,
             type: 'GET',
@@ -12,7 +23,7 @@ function fetchBookDetails(bookId, containerId) {
                 $(containerId).empty();
                 var bookInfo = response.volumeInfo;
                 var detailsHtml = `
-                    <div class="bookDetails">
+                    <div class="book-info">
                         <h1>${bookInfo.title}</h1>
                         <h2>${bookInfo.subtitle ? bookInfo.subtitle : ''}</h2>
                         <p>By ${bookInfo.authors ? bookInfo.authors.join(', ') : ''} - ${bookInfo.publishedDate}</p>
@@ -29,4 +40,3 @@ function fetchBookDetails(bookId, containerId) {
             }
         });
     }
-
