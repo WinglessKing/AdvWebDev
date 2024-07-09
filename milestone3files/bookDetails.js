@@ -1,30 +1,33 @@
-$(document).ready(function() {    
-    $(document).on('click', '.book-item', function() {
+ $(document).on('click', '.book-item', function() {
         var bookId = $(this).data('id');
-        var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
-        var containerId = isBookshelfItem ? '#bookDetailsContainer' : '#bookDetailsContainer';
-        getBookDetails(bookId, containerId);
+        var isBookshelfItem = $(this).closest('#bookshelf-container').length > 0;
+        var containerId = isBookshelfItem ? '#bookshelf-details-container' : '#book-details-container';
+        fetchBookDetails(bookId, containerId);
+        
+        
+    $('html, body').animate({
+        scrollTop: $(containerId).offset().top
+    }, 1000); 
     });
-
-    function getBookDetails(bookId, containerId) {
+function fetchBookDetails(bookId, containerId) {
         $.ajax({
             url: 'https://www.googleapis.com/books/v1/volumes/' + bookId,
             type: 'GET',
             success: function(response) {
                 $(containerId).empty();
                 var bookInfo = response.volumeInfo;
-                var bookDetails = `
-                    <div class="bookDetails">
-                        <h1>${bookDetails.title}</h1>
-                        <h2>${bookDetails.subtitle ? bookDetails.subtitle : ''}</h2>
-                        <p>By ${bookDetails.authors ? bookDetails.authors.join(', ') : ''} - ${bookDetails.publishedDate}</p>
-                        <p>${bookDetails.description ? bookDetails.description : ''}</p>
+                var detailsHtml = `
+                    <div class="book-info">
+                        <h1>${bookInfo.title}</h1>
+                        <h2>${bookInfo.subtitle ? bookInfo.subtitle : ''}</h2>
+                        <p>By ${bookInfo.authors ? bookInfo.authors.join(', ') : ''} - ${bookInfo.publishedDate}</p>
+                        <p>${bookInfo.description ? bookInfo.description : ''}</p>
                     </div>
-                    <div class="bookImage">
-                        ${bookImage.imageLinks ? '<img src="' + bookImage.imageLinks.thumbnail + '" alt="Book cover">' : ''}
+                    <div class="book-cover">
+                        ${bookInfo.imageLinks ? '<img src="' + bookInfo.imageLinks.thumbnail + '" alt="Book cover">' : ''}
                     </div>
                 `;
-                $(containerId).append(bookDetails);
+                $(containerId).append(detailsHtml);
             },
             error: function(error) {
                 console.log('Error:', error);
