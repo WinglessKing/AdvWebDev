@@ -1,71 +1,33 @@
-    $(document).on('click', '.bookCard', function() {
+$(document).ready(function() {    
+    $(document).on('click', '.book-item', function() {
         var bookId = $(this).data('id');
-        fetchBookDetails(bookId);
+        var isBookshelfItem = $(this).closest('#bookshelf-container').length > 0;
+        var containerId = isBookshelfItem ? '#bookshelf-details-container' : '#book-details-container';
+        fetchBookDetails(bookId, containerId);
     });
-    function fetchBookDetails(bookId) {
+
+    function fetchBookDetails(bookId, containerId) {
         $.ajax({
             url: 'https://www.googleapis.com/books/v1/volumes/' + bookId,
             type: 'GET',
             success: function(response) {
-                $('#bookDetailsContainer').empty();
-                $('#bookDetailsContainer').append('<h1>' + response.volumeInfo.title + '</h1>');
-                $('#bookDetailsContainer').append('<p>By ' + response.volumeInfo.authors.join(', ') + '</p>');
-                if (response.volumeInfo.imageLinks) {
-                    $('#bookDetailsContainer').append('<img src="' + response.volumeInfo.imageLinks.thumbnail + '" alt="Book cover">');
-                }
-                $('#bookDetailsContainer').append('<p>' + response.volumeInfo.description + '</p>');
+                $(containerId).empty();
+                var bookInfo = response.volumeInfo;
+                var detailsHtml = `
+                    <div class="book-info">
+                        <h1>${bookInfo.title}</h1>
+                        <h2>${bookInfo.subtitle ? bookInfo.subtitle : ''}</h2>
+                        <p>By ${bookInfo.authors ? bookInfo.authors.join(', ') : ''} - ${bookInfo.publishedDate}</p>
+                        <p>${bookInfo.description ? bookInfo.description : ''}</p>
+                    </div>
+                    <div class="book-cover">
+                        ${bookInfo.imageLinks ? '<img src="' + bookInfo.imageLinks.thumbnail + '" alt="Book cover">' : ''}
+                    </div>
+                `;
+                $(containerId).append(detailsHtml);
             },
             error: function(error) {
                 console.log('Error:', error);
             }
         });
     }
-
-$(document).ready(function() {
-                console.log('Document is ready');
-                const urlParams = new URLSearchParams(window.location.search);
-                const bookId = urlParams.get('id');
-                const url = `https://www.googleapis.com/books/v1/volumes/${bookId}`;
-                console.log('Fetching book details from:', URL);
-                
-                $.getJSON(url, function(data) {
-                    console.log('Book API Response:', data); // Debug 
-                    displayBookDetails(data);
-                    initializeBookViewer(bookId); 
-                }).fail(function(jqXHR, textStatus, errorThrown) {
-                    console.error('API Request Failed:', textStatus, errorThrown); // Debug
-                });
-
-                function displayBookDetails(data) {
-                console.log('Displaying book details'); // Debug
-                const book = data.volumeInfo;
-                const bookDetailsContainer = $('#bookDetailsContainer');
-    
-                const bookDetails = `
-                    <h1>${book.title}</h1>
-                    <img src="${book.imageLinks?.thumbnail}" alt="${book.title}">
-                    <p><strong>Authors:</strong> ${book.authors.join(', ')}</p>
-                    <p><strong>Publisher:</strong> ${book.publisher}</p>
-                    <p><strong>Published Date:</strong> ${book.publishedDate}</p>
-                    <p><strong>Description:</strong> ${book.description}</p>
-                    <p><strong>Price:</strong> ${book.saleInfo?.listPrice?.amount || 'Not available'}</p>
-                `;
-                bookDetailsContainer.append(bookDetails);
-                }
-    
-                function initializeBookViewer(volumeId) {
-                        console.log('Initializing book viewer with volume ID:', volumeId); // Debug
-                        google.books.load();
-        
-                    function initialize() {
-                        var viewer = new google.books.DefaultViewer(document.getElementById('viewer'));
-                        viewer.load(volumeId, alertNotFound);
-                    }
-        
-                    google.books.setOnLoadCallback(initialize);
-        
-                    function alertNotFound() {
-                        alert("Could not embed the book!"); // Alert the user if the book cannot be embedded
-                    }
-                }
-            });
