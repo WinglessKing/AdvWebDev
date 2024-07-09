@@ -50,12 +50,12 @@ $(document).ready(function() {
         console.log('Displaying results:', paginatedResults);  // Debug log
 
         paginatedResults.forEach(function(book) {
-            var bookItem = $('<div class="bookCard" data-id="' + book.id + '"></div>');
-            bookItem.append('<h3>' + book.volumeInfo.title + '</h3>');
+            var bookCard = $('<div class="bookCard" data-id="' + book.id + '"></div>');
+            bookCard.append('<h3>' + book.volumeInfo.title + '</h3>');
             if (book.volumeInfo.imageLinks) {
-                bookItem.append('<img src="' + book.volumeInfo.imageLinks.thumbnail + '" alt="' + book.volumeInfo.title + '">');
+                bookCard.append('<img src="' + book.volumeInfo.imageLinks.thumbnail + '" alt="' + book.volumeInfo.title + '">');
             }
-            resultsContainer.append(bookItem);
+            resultsContainer.append(bookCard);
         });
     }
 
