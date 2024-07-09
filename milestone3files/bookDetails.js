@@ -6,7 +6,7 @@ $('html, body').animate({
     $(document).on('click', '.bookCard', function() {
         var bookId = $(this).data('id');
         var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
-        var containerId = isBookshelfItem ? '#bookshelfDetailsContainer' : '#bookDetailsContainer';
+        var containerId = isBookshelfItem ? '#bookshelfContainer' : '#bookDetailsContainer';
         fetchBookDetails(bookId, containerId);
         
         
