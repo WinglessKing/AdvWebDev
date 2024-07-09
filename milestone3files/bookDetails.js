@@ -1,7 +1,7 @@
  $(document).on('click', '.bookCard', function() {
         var bookId = $(this).data('id');
         var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
-        var containerId = isBookshelfItem ? '#bookshelfContainer' : '#bookDetailsContainer';
+        var containerId = isBookshelfItem ? '#bookDetailsContainer' : '#bookDetailsContainer';
         fetchBookDetails(bookId, containerId);
 
 function fetchBookDetails(bookId, containerId) {
@@ -12,7 +12,7 @@ function fetchBookDetails(bookId, containerId) {
                 $(containerId).empty();
                 var bookInfo = response.volumeInfo;
                 var detailsHtml = `
-                    <div class="book-info">
+                    <div class="bookDetails">
                         <h1>${bookInfo.title}</h1>
                         <h2>${bookInfo.subtitle ? bookInfo.subtitle : ''}</h2>
                         <p>By ${bookInfo.authors ? bookInfo.authors.join(', ') : ''} - ${bookInfo.publishedDate}</p>
