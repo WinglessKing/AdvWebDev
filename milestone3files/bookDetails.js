@@ -1,19 +1,8 @@
-$('html, body').animate({
-        scrollTop: $(containerId).offset().top
-    }, 1000); 
-    });
-
     $(document).on('click', '.bookCard', function() {
         var bookId = $(this).data('id');
         var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
-        var containerId = isBookshelfItem ? '#bookshelfContainer' : '#bookDetailsContainer';
+        var containerId = isBookshelfItem ? '#bookshelf-details-Container' : '#book-details-container';
         fetchBookDetails(bookId, containerId);
-        
-        
-    $('html, body').animate({
-        scrollTop: $(containerId).offset().top
-    }, 1000); 
-    });
 
     function fetchBookDetails(bookId, containerId) {
         $.ajax({
