@@ -1,5 +1,5 @@
 body {
-        background-color: #642714;
+        background-color: #grey;
 }
 
 .pageNum {
@@ -60,7 +60,7 @@ body {
         }
         
         .bookCard {
-            border: 5px solid brown;
+            border: 5px black;
             padding: 5px;
             margin: 5px;
             width: 200px;
