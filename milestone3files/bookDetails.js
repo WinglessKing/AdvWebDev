@@ -1,7 +1,7 @@
     $(document).on('click', '.bookCard', function() {
         var bookId = $(this).data('id');
         var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
-        var containerId = isBookshelfItem ? '#bookshelf-details-Container' : '#bookDetailsContainer';
+        var containerId = isBookshelfItem ? '#bookDetailsContainer' : '#bookDetailsContainer';
         fetchBookDetails(bookId, containerId);
 
     function fetchBookDetails(bookId, containerId) {
