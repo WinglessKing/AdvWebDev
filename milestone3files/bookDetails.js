@@ -29,3 +29,4 @@ function fetchBookDetails(bookId, containerId) {
             }
         });
     }
+
