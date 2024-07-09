@@ -1,7 +1,7 @@
     $(document).on('click', '.bookCard', function() {
         var bookId = $(this).data('id');
         var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
-        var containerId = isBookshelfItem ? '#bookshelf-details-Container' : '#book-details-container';
+        var containerId = isBookshelfItem ? '#bookshelf-details-Container' : '#bookDetailsContainer';
         fetchBookDetails(bookId, containerId);
 
     function fetchBookDetails(bookId, containerId) {
@@ -22,7 +22,7 @@
                         ${bookInfo.imageLinks ? '<img src="' + bookInfo.imageLinks.thumbnail + '" alt="Book cover">' : ''}
                     </div>
                 `;
-                $(containerId).append(detailsHtml);
+                $(containerId).append(details);
             },
             error: function(error) {
                 console.log('Error:', error);
