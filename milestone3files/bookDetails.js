@@ -1,3 +1,26 @@
+    $(document).on('click', '.bookCard', function() {
+        var bookId = $(this).data('id');
+        fetchBookDetails(bookId);
+    });
+    function fetchBookDetails(bookId) {
+        $.ajax({
+            url: 'https://www.googleapis.com/books/v1/volumes/' + bookId,
+            type: 'GET',
+            success: function(response) {
+                $('#bookDetailsContainer').empty();
+                $('#bookDetailsContainer').append('<h1>' + response.volumeInfo.title + '</h1>');
+                $('#bookDetailsContainer').append('<p>By ' + response.volumeInfo.authors.join(', ') + '</p>');
+                if (response.volumeInfo.imageLinks) {
+                    $('#bookDetailsContainer').append('<img src="' + response.volumeInfo.imageLinks.thumbnail + '" alt="Book cover">');
+                }
+                $('#bookDetailsContainer').append('<p>' + response.volumeInfo.description + '</p>');
+            },
+            error: function(error) {
+                console.log('Error:', error);
+            }
+        });
+    }
+
 $(document).ready(function() {
                 console.log('Document is ready');
                 const urlParams = new URLSearchParams(window.location.search);
