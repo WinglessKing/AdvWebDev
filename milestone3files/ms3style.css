@@ -1,7 +1,9 @@
 body {
         background-color: white;
 }
-
+h3 {
+    text-align: center;    
+}
 .pageNum {
     display: inline-block;
     margin: 0 5px;
