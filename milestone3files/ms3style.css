@@ -13,18 +13,18 @@ body {
 }
 
 .pageNum:hover {
-    background-color: #444;
+    background-color: #ddd;
 }
 
 .pageNum.active {
     background-color: #62a9ef;
-    color: #fff;
+    color: #ddd;
 }
 /*Navbar Styling*/
         nav ul {
             list-style-type: none;
             padding: 0;
-            background-color: #A0522D;
+            background-color: red;
             overflow: hidden;
         }
         
