@@ -6,14 +6,14 @@ $(document).ready(function() {
 
     // Book search functionality
     $("#searchButton").click(function() {
-        var searchTerm = $("#keyTerm").val();
-        console.log('Key term:', searchTerm);  // Debug log
-        if (searchTerm) {
+        var keyTerm = $("#keyTerm").val();
+        console.log('Key term:', keyTerm);  // Debug log
+        if (keyTerm) {
             searchResults = [];
             currentPage = 1;
-            fetchResults(searchTerm, 0, maxResultsPerRequest, function() {
+            fetchResults(keyTerm, 0, maxResultsPerRequest, function() {
                 if (searchResults.length < 50) {
-                    fetchResults(searchTerm, 40, 10, function() {
+                    fetchResults(keyTerm, 40, 10, function() {
                         displaySearchResults();
                         setupPagination();
                     });
@@ -25,9 +25,9 @@ $(document).ready(function() {
         }
     });
 
-    function fetchResults(searchTerm, startIndex, maxResults, callback) {
+    function fetchResults(keyTerm, startIndex, maxResults, callback) {
         $.ajax({
-            url: `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&startIndex=${startIndex}&maxResults=${maxResults}`,
+            url: `https://www.googleapis.com/books/v1/volumes?q=${keyTerm}&startIndex=${startIndex}&maxResults=${maxResults}`,
             method: 'GET',
             success: function(data) {
                 console.log('Fetched results:', data.items);  // Debug log
