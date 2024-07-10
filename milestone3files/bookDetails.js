@@ -10,16 +10,16 @@
             type: 'GET',
             success: function(response) {
                 $(containerId).empty();
-                var bookInfo = response.volumeInfo;
+                var bookDetails = response.volumeInfo;
                 var details = `
                     <div class="bookDetails">
-                        <h1>${bookInfo.title}</h1>
-                        <h2>${bookInfo.subtitle ? bookInfo.subtitle : ''}</h2>
-                        <p>By ${bookInfo.authors ? bookInfo.authors.join(', ') : ''} - ${bookInfo.publishedDate}</p>
-                        <p>${bookInfo.description ? bookInfo.description : ''}</p>
+                        <h1>${bookDetails.title}</h1>
+                        <h2>${bookDetails.subtitle ? bookDetails.subtitle : ''}</h2>
+                        <p>By ${bookDetails.authors ? bookDetails.authors.join(', ') : ''} - ${bookDetails.publishedDate}</p>
+                        <p>${bookDetails.description ? bookDetails.description : ''}</p>
                     </div>
                     <div class="bookImage">
-                        ${bookInfo.imageLinks ? '<img src="' + bookInfo.imageLinks.thumbnail + '" alt="Book cover">' : ''}
+                        ${bookDetails.imageLinks ? '<img src="' + bookDetails.imageLinks.thumbnail + '" alt="Book cover">' : ''}
                     </div>
                 `;
                 $(containerId).append(details);
