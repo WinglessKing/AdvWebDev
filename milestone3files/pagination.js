@@ -86,3 +86,35 @@ $(document).ready(function() {
         setupPagination();
     });
 });
+
+$(document).on('click', '.bookCard', function() {
+        var bookId = $(this).data('id');;
+        fetchBookDetails(bookId);
+}
+               
+ function fetchBookDetails(bookId) {
+        $.ajax({
+            url: 'https://www.googleapis.com/books/v1/volumes/' + bookId,
+            type: 'GET',
+            success: function(response) {
+                $(bookDetailsContainer).empty();
+                var bookInfo = response.volumeInfo;
+                var details= `
+                    <div class="book-info">
+                        <h1>${bookInfo.title}</h1>
+                        <h2>${bookInfo.subtitle ? bookInfo.subtitle : ''}</h2>
+                        <p>By ${bookInfo.authors ? bookInfo.authors.join(', ') : ''} - ${bookInfo.publishedDate}</p>
+                        <p>${bookInfo.description ? bookInfo.description : ''}</p>
+                    </div>
+                    <div class="book-cover">
+                        ${bookInfo.imageLinks ? '<img src="' + bookInfo.imageLinks.thumbnail + '" alt="Book cover">' : ''}
+                    </div>
+                `;
+                $(bookDetailsContainer).append(details);
+            },
+            error: function(error) {
+                console.log('Error:', error);
+            }
+        });
+    }       
+    
