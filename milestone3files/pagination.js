@@ -5,15 +5,26 @@ $(document).ready(function() {
     const maxResultsPerRequest = 40; // Google Books API limit
 
     // Book search functionality
-    $("#searchButton").click(function() {
-        var keyTerm = $("#keyTerm").val();
-        console.log('Key term:', keyTerm);  // Debug log
-        if (keyTerm) {
+    $("#search-button").click(function() {
+        performSearch();
+    });
+
+    // Trigger search on Enter key press
+    $("#search-term").keypress(function(event) {
+        if (event.which == 13) { //enter
+            performSearch();
+        }
+    });
+
+    function performSearch() {
+        var searchTerm = $("#search-term").val();
+        console.log('Search term:', searchTerm);  // Debug log
+        if (searchTerm) {
             searchResults = [];
             currentPage = 1;
-            fetchResults(keyTerm, 0, maxResultsPerRequest, function() {
+            fetchResults(searchTerm, 0, maxResultsPerRequest, function() {
                 if (searchResults.length < 50) {
-                    fetchResults(keyTerm, 40, 10, function() {
+                    fetchResults(searchTerm, 40, 10, function() {
                         displaySearchResults();
                         setupPagination();
                     });
@@ -23,11 +34,10 @@ $(document).ready(function() {
                 }
             });
         }
-    });
-
-    function fetchResults(keyTerm, startIndex, maxResults, callback) {
+    }
+    function fetchResults(searchTerm, startIndex, maxResults, callback) {
         $.ajax({
-            url: `https://www.googleapis.com/books/v1/volumes?q=${keyTerm}&startIndex=${startIndex}&maxResults=${maxResults}`,
+            url: `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&startIndex=${startIndex}&maxResults=${maxResults}`,
             method: 'GET',
             success: function(data) {
                 console.log('Fetched results:', data.items);  // Debug log
@@ -42,7 +52,7 @@ $(document).ready(function() {
     }
 
     function displaySearchResults() {
-        let resultsContainer = $("#resultsContainer");
+        let resultsContainer = $("#results-container");
         resultsContainer.empty();
         let startIndex = (currentPage - 1) * itemsPerPage;
         let endIndex = startIndex + itemsPerPage;
@@ -50,39 +60,82 @@ $(document).ready(function() {
         console.log('Displaying results:', paginatedResults);  // Debug log
 
         paginatedResults.forEach(function(book) {
-            var bookCard = $('<div class="bookCard" data-id="' + book.id + '"></div>');
-            bookCard.append('<h3>' + book.volumeInfo.title + '</h3>');
+            var bookItem = $('<div class="book-item" data-id="' + book.id + '"></div>');
             if (book.volumeInfo.imageLinks) {
-                bookCard.append('<img src="' + book.volumeInfo.imageLinks.thumbnail + '" alt="' + book.volumeInfo.title + '">');
+                bookItem.append('<img src="' + book.volumeInfo.imageLinks.thumbnail + '" alt="' + book.volumeInfo.title + '">');
             }
-            resultsContainer.append(bookCard);
+            bookItem.append('<h3>' + book.volumeInfo.title + '</h3>');
+            resultsContainer.append(bookItem);
         });
     }
 
     function setupPagination() {
-        let paginationCard = $("#paginationCard");
-        paginationCard.empty();
+        let paginationContainer = $("#pagination-container");
+        paginationContainer.empty();
         let totalPages = Math.ceil(searchResults.length / itemsPerPage);
         console.log('Total pages:', totalPages);  // Debug log
 
         if (totalPages > 1) {
             for (let i = 1; i <= totalPages; i++) {
-                let pageNum = $('<span class="pageNum">' + i + '</span>');
-                pageNum.data('page', i);
+                let pageLink = $('<span class="page-link">' + i + '</span>');
+                pageLink.data('page', i);
                 if (i === currentPage) {
-                    pageNum.addClass('active');
+                    pageLink.addClass('active');
                 }
-                paginationCard.append(pageNum);
+                paginationContainer.append(pageLink);
             }
         } else {
-            paginationCard.append('<span class="pageNum active">1</span>');
+            paginationContainer.append('<span class="page-link active">1</span>');
         }
     }
 
-    $(document).on('click', '.pageNum', function() {
+    $(document).on('click', '.page-link', function() {
         currentPage = $(this).data('page');
         console.log('Navigating to page:', currentPage);  // Debug log
         displaySearchResults();
         setupPagination();
+
+        
+    $('html, body').animate({
+        scrollTop: $(containerId).offset().top
+    }, 1000); 
     });
+
+    $(document).on('click', '.book-item', function() {
+        var bookId = $(this).data('id');
+        var isBookshelfItem = $(this).closest('#bookshelf-container').length > 0;
+        var containerId = isBookshelfItem ? '#bookshelf-details-container' : '#book-details-container';
+        fetchBookDetails(bookId, containerId);
+        
+        
+    $('html, body').animate({
+        scrollTop: $(containerId).offset().top
+    }, 1000); 
+    });
+
+    function fetchBookDetails(bookId, containerId) {
+        $.ajax({
+            url: 'https://www.googleapis.com/books/v1/volumes/' + bookId,
+            type: 'GET',
+            success: function(response) {
+                $(containerId).empty();
+                var bookInfo = response.volumeInfo;
+                var detailsHtml = `
+                    <div class="book-info">
+                        <h1>${bookInfo.title}</h1>
+                        <h2>${bookInfo.subtitle ? bookInfo.subtitle : ''}</h2>
+                        <p>By ${bookInfo.authors ? bookInfo.authors.join(', ') : ''} - ${bookInfo.publishedDate}</p>
+                        <p>${bookInfo.description ? bookInfo.description : ''}</p>
+                    </div>
+                    <div class="book-cover">
+                        ${bookInfo.imageLinks ? '<img src="' + bookInfo.imageLinks.thumbnail + '" alt="Book cover">' : ''}
+                    </div>
+                `;
+                $(containerId).append(detailsHtml);
+            },
+            error: function(error) {
+                console.log('Error:', error);
+            }
+        });
+    }
 });
