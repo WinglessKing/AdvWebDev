@@ -17,7 +17,7 @@ body {
 }
 
 .pageNum.active {
-    background-color: #62a9ef;
+    background-color: red;
     color: #ddd;
 }
 /*Navbar Styling*/
