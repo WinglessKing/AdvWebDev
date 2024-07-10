@@ -46,7 +46,7 @@ $(document).ready(function() {
                     }
                 }
             });
-$(document).on('click', '.book-item', function() {
+$(document).on('click', '.bookCard', function() {
         var bookId = $(this).data('id');
         var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
         var containerId = $('#bookDetailsContainer');
