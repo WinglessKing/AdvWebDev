@@ -57,6 +57,7 @@ body {
             flex-wrap: wrap;
             justify-content: space-around;
             padding: 20px;
+                border: 5px black;
         }
         
         .bookCard {
