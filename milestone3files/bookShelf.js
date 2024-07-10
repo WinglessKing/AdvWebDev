@@ -7,7 +7,7 @@ $(document).ready(function() {
             displayBookshelf(data.items);
         },
         error: function(xhr, status, error) {
-            console.error('Bookshelf request failed:', status, error);
+            console.error('Request failed:', status, error);
         }
     });
 
