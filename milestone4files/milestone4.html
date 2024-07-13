@@ -6,10 +6,18 @@
         <title>Book Search</title>
         <link rel="stylesheet" href="ms3style.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
+        <style>
+        .container { display: flex; flex-wrap: wrap; }
+        .grid-item, .list-item { border: 1px solid #ccc; padding: 10px; margin: 10px; cursor: pointer; }
+        .grid-item { width: calc(33.333% - 20px); }
+        .list-item { width: calc(100% - 20px); }
+        .details { display: none; }
+    </style>
+        </style>
     </head>
     
     <body>
-
         <nav>
             <ul>
                 <li><a href ="milestone3.html">Book Search</a></li>
@@ -17,14 +25,19 @@
             </ul>
         </nav>
         
+    <div>
+        <button onclick="switchView('grid')">Grid View</button>
+        <button onclick="switchView('list')">List View</button>
+    </div>
+        
 <!--Containers-->
         <div id="searchContainer">
             <input type="text" id="keyTerm" placeholder="Enter search term">
             <button id="searchButton">Search</button>
         </div>
-        <div id="resultsContainer"></div>
+        <div id="resultsContainer" class="container"></div>
         <div id="paginationCard"></div>
-        <div id="bookDetailsContainer"></div>
+        <div id="bookDetailsContainer" class="details"></div>
         <div id="bookshelfContainer">
             <h3>Browse my Library</h3>
         </div>
@@ -33,6 +46,63 @@
         <script src="pagination.js"></script>
         <script src="bookDetails.js"></script>
         <script src="bookShelf.js"></script>
+        
+        <script id="grid-template" type="text/template">
+        {{#books}}
+        <div class="grid-item" onclick="showDetails('{{id}}')">
+            <h3>{{title}}</h3>
+            <p>{{author}}</p>
+        </div>
+        {{/books}}
+    </script>
+    <script id="list-template" type="text/template">
+        {{#books}}
+        <div class="list-item" onclick="showDetails('{{id}}')">
+            <h3>{{title}}</h3>
+            <p>{{author}}</p>
+        </div>
+        {{/books}}
+    </script>    
+<script id="details-template" type="text/template">
+        <h2>{{title}}</h2>
+        <p><strong>Author:</strong> {{author}}</p>
+        <p><strong>Publisher:</strong> {{publisher}}</p>
+        <p><strong>Year:</strong> {{year}}</p>
+        <p>{{description}}</p>
+    </script>
+<script>
+        const books = [
+            { id: '1', title: 'Book One', author: 'Author One', publisher: 'Publisher One', year: '2020', description: 'Description of book one.' },
+            { id: '2', title: 'Book Two', author: 'Author Two', publisher: 'Publisher Two', year: '2021', description: 'Description of book two.' },
+            { id: '3', title: 'Book Three', author: 'Author Three', publisher: 'Publisher Three', year: '2022', description: 'Description of book three.' }
+        ];
+
+        function render(templateId, data, targetId) {
+            const template = document.getElementById(templateId).innerHTML;
+            const rendered = Mustache.render(template, data);
+            document.getElementById(targetId).innerHTML = rendered;
+        }
+
+        function switchView(view) {
+            const container = document.getElementById('search-results');
+            container.className = `container ${view}-view`;
+            render(`${view}-template`, { books }, 'search-results');
+        }
+
+        function showDetails(id) {
+            const book = books.find(b => b.id === id);
+            render('details-template', book, 'book-details');
+            document.getElementById('book-details').style.display = 'block';
+        }
+
+        // Initialize with grid view
+        switchView('grid');
+    </script>
+
+
+
+
+        
     </body>
 </html>
 
