@@ -5,22 +5,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Book Search</title>
         <link rel="stylesheet" href="ms3style.css">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
         <style>
-        .container { display: flex; flex-wrap: wrap; }
-        .grid-item, .list-item { border: 1px solid #ccc; padding: 10px; margin: 10px; cursor: pointer; }
-        .grid-item { width: calc(33.333% - 20px); }
-        .list-item { width: calc(100% - 20px); }
-        .details { display: none; }
-    </style>
+            .container { display: flex; flex-wrap: wrap; }
+            .grid-item, .list-item { border: 1px solid #ccc; padding: 10px; margin: 10px; cursor: pointer; }
+            .grid-item { width: calc(33.333% - 20px); }
+            .list-item { width: calc(100% - 20px); }
+            .details { display: none; }
         </style>
+
     </head>
     
     <body>
         <nav>
             <ul>
-                <li><a href ="milestone3.html">Book Search</a></li>
+                <li><a href ="milestone4.html">Book Search</a></li>
                 <li><a href ="#bookshelfContainer">My Bookshelf</a></li>
             </ul>
         </nav>
@@ -43,6 +41,8 @@
         </div>
         
 <!--Scripts-->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
         <script src="pagination.js"></script>
         <script src="bookDetails.js"></script>
         <script src="bookShelf.js"></script>
@@ -84,15 +84,15 @@
         }
 
         function switchView(view) {
-            const container = document.getElementById('search-results');
+            const container = document.getElementById('searchContainer');
             container.className = `container ${view}-view`;
-            render(`${view}-template`, { books }, 'search-results');
+            render(`${view}-template`, { books }, 'searchContainer');
         }
 
         function showDetails(id) {
             const book = books.find(b => b.id === id);
-            render('details-template', book, 'book-details');
-            document.getElementById('book-details').style.display = 'block';
+            render('details-template', book, 'bookDetails');
+            document.getElementById('bookDetails').style.display = 'block';
         }
 
         // Initialize with grid view
