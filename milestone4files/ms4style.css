@@ -1,1 +1,74 @@
+body {
+        background-color: white;
+}
+h3 {
+    text-align: center;    
+}
+.pageNum {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    background-color: #333;
+    color: #ddd;
+    border-radius: 5px;
+}
 
+.pageNum:hover {
+    background-color: #ddd;
+}
+
+.pageNum.active {
+    background-color: red;
+    color: #ddd;
+}
+/*Navbar Styling*/
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            background-color: red;
+            overflow: hidden;
+        }
+        
+        nav ul li {
+            float: left;
+        }
+        
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        
+        nav ul li a:hover {
+            background-color: #111;
+        }
+
+        /*Container Styling*/
+        #searchContainer {
+            padding: 20px;
+            text-align: center;
+            border: 10px solid #2f1209:    
+        }
+        
+        #resultsContainer, #bookshelfContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+                border: 5px black;
+        }
+        
+        .bookCard {
+            border: 5px black;
+            padding: 5px;
+            margin: 5px;
+            width: 200px;
+            text-align: center;
+        }
+        
+        .bookCard img {
+            max-width: 100%;
+        }
