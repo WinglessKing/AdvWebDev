@@ -83,9 +83,9 @@
         }
 
         function switchView(view) {
-            const container = document.getElementById('searchContainer');
+            const container = document.getElementById('resultsContainer');
             container.className = `container ${view}-view`;
-            render(`${view}-template`, { books }, 'searchContainer');
+            render(`${view}-template`, { books }, 'resultsContainer');
         }
 
         function showDetails(id) {
