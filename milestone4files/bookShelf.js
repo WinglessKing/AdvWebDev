@@ -23,7 +23,7 @@ $(document).ready(function() {
     });
 
     function displayBookshelf(books) {
-        var bookshelfContainer = $("#bookshelf-container");
+        var bookshelfContainer = $("#bookshelfContainer");
         bookshelfContainer.empty(); // Clear previous items
         const template = $("#bookshelf-item-template").html();
         books.forEach(function(book) {
@@ -44,7 +44,7 @@ $(document).ready(function() {
         }
     }
 
-    $(document).on('click', '#bookshelf-container .book-item', function() {
+    $(document).on('click', '#bookshelfContainer .book-item', function() {
         var bookId = $(this).data('id');
         fetchBookDetails(bookId, '#bookshelf-details-container', function() {
             // Smooth scroll to the bookshelf details container
