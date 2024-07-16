@@ -9,12 +9,12 @@ $(document).ready(function() {
     loadSearchHistory();
 
     // Book search functionality
-    $("#search-button").click(function() {
+    $("#searchButton").click(function() {
         performSearch();
     });
 
     // Trigger search on Enter key press
-    $("#search-term").keypress(function(event) {
+    $("#keyTerm").keypress(function(event) {
         if (event.which == 13) { // 13 is the Enter key code
             performSearch();
         }
@@ -28,7 +28,7 @@ $(document).ready(function() {
 
     // Perform search
     function performSearch() {
-        var searchTerm = $("#search-term").val();
+        var searchTerm = $("#keyTerm").val();
         if (searchTerm) {
             addSearchHistory(searchTerm);
             searchResults = [];
@@ -64,7 +64,7 @@ $(document).ready(function() {
     }
 
     function displaySearchResults() {
-        let resultsContainer = $("#results-container");
+        let resultsContainer = $("#resultsContainer");
         resultsContainer.empty();
         let startIndex = (currentPage - 1) * itemsPerPage;
         let endIndex = startIndex + itemsPerPage;
@@ -91,7 +91,7 @@ $(document).ready(function() {
     }
 
     function setupPagination() {
-        let paginationContainer = $("#pagination-container");
+        let paginationContainer = $("#paginationContainer");
         paginationContainer.empty();
         let totalPages = Math.ceil(searchResults.length / itemsPerPage);
         console.log('Total pages:', totalPages);  // Debug log
@@ -117,9 +117,9 @@ $(document).ready(function() {
         });
     }
 
-    $(document).on('click', '#results-container .book-item, #bookshelf-container .book-item', function() {
+    $(document).on('click', '#resultsContainer .book-item, #bookshelfContainer .book-item', function() {
         var bookId = $(this).data('id');
-        var isBookshelfItem = $(this).closest('#bookshelf-container').length > 0;
+        var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
         var containerId = isBookshelfItem ? '#bookshelf-details-container' : '#book-details-container';
         fetchBookDetails(bookId, containerId, function() {
             // Smooth scroll to the book details container
