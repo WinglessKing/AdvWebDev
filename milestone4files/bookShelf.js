@@ -23,9 +23,9 @@ $(document).ready(function() {
     });
 
     function displayBookshelf(books) {
-        var bookshelfContainer = $("#bookshelfContainer");
-        bookshelfContainer.empty();
-        const template = $("#bookshelfCardTemplate").html();
+        var bookshelfContainer = $("#bookshelf-container");
+        bookshelfContainer.empty(); // Clear previous items
+        const template = $("#bookshelf-item-template").html();
         books.forEach(function(book) {
             const rendered = Mustache.render(template, {
                 id: book.id,
@@ -44,9 +44,13 @@ $(document).ready(function() {
         }
     }
 
-    $(document).on('click', '#bookshelfContainer .bookCard', function() {
+    $(document).on('click', '#bookshelf-container .book-item', function() {
         var bookId = $(this).data('id');
-        fetchBookDetails(bookId, '#bookshelfDetailsContainer', function() {    
+        fetchBookDetails(bookId, '#bookshelf-details-container', function() {
+            // Smooth scroll to the bookshelf details container
+            $('html, body').animate({
+                scrollTop: $('#bookshelf-details-container').offset().top - 100 // Adjust this value for the desired space
+            }, 1000); // 1000 milliseconds for a smooth scroll effect
         });
     });
 
@@ -56,7 +60,7 @@ $(document).ready(function() {
             type: 'GET',
             success: function(response) {
                 $(containerId).empty();
-                const template = $("#details-template").html();
+                const template = $("#book-details-template").html();
                 const rendered = Mustache.render(template, {
                     title: response.volumeInfo.title,
                     subtitle: response.volumeInfo.subtitle,
