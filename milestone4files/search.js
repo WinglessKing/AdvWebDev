@@ -1,20 +1,20 @@
 $(document).ready(function() {
-    let isGridView = true;
     let currentPage = 1;
     let itemsPerPage = 10;
     let searchResults = [];
     const maxResultsPerRequest = 40;
-    
+    let isGridView = true;
+
     // Initialize search history
     loadSearchHistory();
 
     // Book search functionality
-    $("#searchButton").click(function() {
+    $("#search-button").click(function() {
         performSearch();
     });
 
     // Trigger search on Enter key press
-    $("#keyTerm").keypress(function(event) {
+    $("#search-term").keypress(function(event) {
         if (event.which == 13) { // 13 is the Enter key code
             performSearch();
         }
@@ -28,7 +28,7 @@ $(document).ready(function() {
 
     // Perform search
     function performSearch() {
-        var searchTerm = $("keyTerm").val();
+        var searchTerm = $("#search-term").val();
         if (searchTerm) {
             addSearchHistory(searchTerm);
             searchResults = [];
@@ -64,7 +64,7 @@ $(document).ready(function() {
     }
 
     function displaySearchResults() {
-        let resultsContainer = $("#resultsContainer");
+        let resultsContainer = $("#results-container");
         resultsContainer.empty();
         let startIndex = (currentPage - 1) * itemsPerPage;
         let endIndex = startIndex + itemsPerPage;
@@ -82,6 +82,7 @@ $(document).ready(function() {
             });
             resultsContainer.append(rendered);
         });
+
         if (!isGridView) {
             resultsContainer.removeClass("grid-view").addClass("list-view");
         } else {
@@ -90,7 +91,7 @@ $(document).ready(function() {
     }
 
     function setupPagination() {
-        let paginationContainer = $("#paginationCard");
+        let paginationContainer = $("#pagination-container");
         paginationContainer.empty();
         let totalPages = Math.ceil(searchResults.length / itemsPerPage);
         console.log('Total pages:', totalPages);  // Debug log
@@ -116,11 +117,15 @@ $(document).ready(function() {
         });
     }
 
-    $(document).on('click', '#resultsContainer .book-item, #bookshelfContainer .book-item', function() {
+    $(document).on('click', '#results-container .book-item, #bookshelf-container .book-item', function() {
         var bookId = $(this).data('id');
-        var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
+        var isBookshelfItem = $(this).closest('#bookshelf-container').length > 0;
         var containerId = isBookshelfItem ? '#bookshelf-details-container' : '#book-details-container';
-        fetchBookDetails(bookId, containerId, function() {t
+        fetchBookDetails(bookId, containerId, function() {
+            // Smooth scroll to the book details container
+            $('html, body').animate({
+                scrollTop: $(containerId).offset().top - 100 // Adjust this value for the desired space
+            }, 1000); // 1000 milliseconds for a smooth scroll effect
         });
     });
 
@@ -169,4 +174,9 @@ $(document).ready(function() {
             searchHistoryList.append('<li>' + term + '</li>');
         });
     }
+
+    $(document).on('click', '#search-history-list li', function() {
+        $("#search-term").val($(this).text());
+        performSearch();
+    });
 });
