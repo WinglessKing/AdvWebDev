@@ -55,6 +55,7 @@ $(document).ready(function() {
         let paginatedResults = searchResults.slice(startIndex, endIndex);
         console.log('Displaying results:', paginatedResults);  // Debug log
 
+     const template = $("search-template").html();
         paginatedResults.forEach(function(book) {
             const rendered = Mustache.render(template, {
                 id: book.id,
@@ -63,8 +64,9 @@ $(document).ready(function() {
                 authors: book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : '',
                 publishedDate: book.volumeInfo.publishedDate
             });
-            resultsContainer.append(bookCard);
+            resultsContainer.append(rendered);
         });
+        
         if (!isGridView) {
             resultsContainer.removeClass("grid-view").addClass("list-view");
         } else {
