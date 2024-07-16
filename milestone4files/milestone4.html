@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Search and Bookshelf</title>
+    <title>Book Search</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"></script>
@@ -11,43 +11,31 @@
 <body>
     <nav>
         <ul>
-            <li><a href="#search-container">Book Search</a></li>
-            <li><a href="#bookshelf-container">My Bookshelf</a></li>
-            <li><a href="../index.html">Project Menu</a></li>
+            <li><a href ="milestone4.html">Book Search</a></li>
+            <li><a href ="#bookshelfContainer">My Bookshelf</a></li>
         </ul>
     </nav>
 
-    <div id="search-container">
+<!--Container-->
+    <div id="searchContainer">
         <h1>Search for Books</h1>
-        <p>Enter a search term to find your favorite books</p>
-        <input type="text" id="search-term" placeholder="Enter search term">
-        <button id="search-button" class="toggle-view-button">Search</button>
+         <input type="text" id="keyTerm" placeholder="Enter search term">
+        <button id="searchButton">Search</button>
         <button id="toggle-view" class="toggle-view-button">Toggle View</button>
     </div>
     
-    <div id="search-history-container">
-        <h3>Search History</h3>
-        <ul id="search-history-list"></ul>
-    </div>
-    
-    <div id="pagination-container"></div>
-    <div id="results-container"></div>
+    <div id="resultsContainer"></div>
+    <div id="paginationCard"></div>
 
-    <div id="book-details-container" class="book-details-layout"></div>
-
-    <div id="bookshelf-title">
-        <h1>My Personal Bookshelf</h1>
-        <p>I hope you enjoy viewing some of my books!</p>
-        <button id="toggle-bookshelf-view" class="toggle-view-button">Toggle View</button>
-    </div>
-
-    <div id="bookshelf-container"></div>
-
+    <div id="bookDetailsContainer" class="book-details-layout"></div>
+    <div id="bookshelfContainer"></div>
     <div id="bookshelf-details-container" class="book-details-layout"></div>
 
-    <div id="viewerCanvas" class="centered"></div>
-
-    <!-- Templates -->
+<!--Scripts-->
+    <script src="search.js"></script>
+    <script src="bookShelf.js"></script>
+    
+<!-- Templates -->
     <script id="search-result-template" type="text/template">
         <div class="book-item" data-id="{{id}}">
             <img src="{{thumbnail}}" alt="{{title}}">
@@ -81,8 +69,6 @@
             </div>
         </div>
     </script>
-
-    <script src="search.js"></script>
-    <script src="bookShelf.js"></script>
+    
 </body>
 </html>
