@@ -3,16 +3,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Book Search</title>
+        <title>Milestone 4</title>
         <link rel="stylesheet" href="ms4style.css">
-        <style>
-            .container { display: flex; flex-wrap: wrap; }
-            .grid-item, .list-item { border: 1px solid #ccc; padding: 10px; margin: 10px; cursor: pointer; }
-            .grid-item { width: calc(33.333% - 20px); }
-            .list-item { width: calc(100% - 20px); }
-            .details { display: none; }
-        </style>
-
     </head>
     
     <body>
@@ -27,81 +19,55 @@
         <div id="searchContainer">
             <input type="text" id="keyTerm" placeholder="Enter search term">
             <button id="searchButton">Search</button>
+            <button id="viewButton" class=viewButton">Toggle View</button>
         </div>
         
-        <div>
-            <button onclick="switchView('grid')">Grid View</button>
-            <button onclick="switchView('list')">List View</button>
-        </div>
         <div id="resultsContainer" class="container"></div>
         <div id="paginationCard"></div>
+        
         <div id="bookDetailsContainer" class="details"></div>
         <div id="bookshelfContainer"></div>
         
 <!--Scripts-->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
-        <script src="pagination.js"></script>
-        <script src="bookDetails.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/mustache@4.2.0/mustache.min.js"></script>
+        <script src="search.js"></script>
         <script src="bookShelf.js"></script>
         
-        <script id="grid-template" type="text/template">
-        {{#books}}
-        <div class="grid-item" onclick="showDetails('{{id}}')">
-            <h3>{{title}}</h3>
-            <p>{{author}}</p>
-        </div>
-        {{/books}}
-    </script>
+<!--Templates-->        
+        <script id="search-template" type="text/template">
+            <div class="book-item" data-id="{{id}}">
+                <img src="{{thumbnail}}" alt="{{title}}">
+                <div class="book-details">
+                    <h3>{{title}}</h3>
+                    <p>{{authors}}</p>
+                    <p>{{publishedDate}}</p>
+                </div>
+            </div>
+        </script>
         
-    <script id="list-template" type="text/template">
-        {{#books}}
-        <div class="list-item" onclick="showDetails('{{id}}')">
-            <h3>{{title}}</h3>
-            <p>{{author}}</p>
-        </div>
-        {{/books}}
-    </script>
+        <script id="bookshelfCard-template" type="text/template">
+            <div class="bookCard" data-id="{{id}}">
+                <img src="{{thumbnail}}" alt="{{title}}">
+            <div class="book-details">
+                <h3>{{title}}</h3>
+                <p>{{authors}}</p>
+                <p>{{publishedDate}}</p>
+            </div>
+            </div>
+        </script>
         
-<script id="details-template" type="text/template">
-        <h2>{{title}}</h2>
-        <p><strong>Author:</strong> {{author}}</p>
-        <p><strong>Publisher:</strong> {{publisher}}</p>
-        <p><strong>Year:</strong> {{year}}</p>
-        <p>{{description}}</p>
-    </script>
-<script>
-        const books = [
-            { id: '1', title: 'Book One', author: 'Author One', publisher: 'Publisher One', year: '2020', description: 'Description of book one.' },
-            { id: '2', title: 'Book Two', author: 'Author Two', publisher: 'Publisher Two', year: '2021', description: 'Description of book two.' },
-            { id: '3', title: 'Book Three', author: 'Author Three', publisher: 'Publisher Three', year: '2022', description: 'Description of book three.' }
-        ];
-
-        function render(templateId, data, targetId) {
-            const template = document.getElementById(templateId).innerHTML;
-            const rendered = Mustache.render(template, data);
-            document.getElementById(targetId).innerHTML = rendered;
-        }
-
-        function switchView(view) {
-            const container = document.getElementById('resultsContainer');
-            container.className = `container ${view}-view`;
-            render(`${view}-template`, { books }, 'resultsContainer');
-        }
-
-        function showDetails(id) {
-            const book = books.find(b => b.id === id);
-            render('details-template', book, 'bookDetails');
-            document.getElementById('bookDetails').style.display = 'block';
-        }
-
-        // Initialize with grid view
-        switchView('grid');
-    </script>
-
-
-
-
+        <script id="details-template" type="text/template">
+            <div class="book-details">
+                <h1>{{title}}</h1>
+                <h2>{{subtitle}}</h2>
+                <p>By {{authors}} - {{publishedDate}}</p>
+                <p>{{{description}}}</p>
+            </div>
+            <div class="book-cover">
+                <img src="{{thumbnail}}" alt="Book cover">
+            </div>
+        </script>
         
     </body>
 </html>
