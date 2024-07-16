@@ -40,7 +40,8 @@ $(document).ready(function() {
             }
         });
     }
-
+    
+//Search w/ pagniation
     function displaySearchResults() {
         let resultsContainer = $("#resultsContainer");
         resultsContainer.empty();
@@ -50,13 +51,20 @@ $(document).ready(function() {
         console.log('Displaying results:', paginatedResults);  // Debug log
 
         paginatedResults.forEach(function(book) {
-            var bookCard = $('<div class="bookCard" data-id="' + book.id + '"></div>');
-            bookCard.append('<h3>' + book.volumeInfo.title + '</h3>');
-            if (book.volumeInfo.imageLinks) {
-                bookCard.append('<img src="' + book.volumeInfo.imageLinks.thumbnail + '" alt="' + book.volumeInfo.title + '">');
-            }
+            const rendered = Mustache.render(template, {
+                id: book.id,
+                thumbnail: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : '',
+                title: book.volumeInfo.title,
+                authors: book.volumeInfo.authors ? book.volumeInfo.authors.join(', ') : '',
+                publishedDate: book.volumeInfo.publishedDate
+            });
             resultsContainer.append(bookCard);
         });
+        if (!isGridView) {
+            resultsContainer.removeClass("grid-view").addClass("list-view");
+        } else {
+            resultsContainer.removeClass("list-view").addClass("grid-view");
+        }
     }
 
     function setupPagination() {
