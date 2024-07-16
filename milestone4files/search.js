@@ -25,6 +25,10 @@ $(document).ready(function() {
             });
         }
     });
+        $("#viewButton").click(function() {
+        isGridView = !isGridView;
+        displaySearchResults();
+    });
 
     function fetchResults(keyTerm, startIndex, maxResults, callback) {
         $.ajax({
