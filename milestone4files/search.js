@@ -1,8 +1,9 @@
 $(document).ready(function() {
+    let isGridView = true;
     let currentPage = 1;
     let itemsPerPage = 10;
     let searchResults = [];
-    const maxResultsPerRequest = 40; // Google Books API limit
+    const maxResultsPerRequest = 40; 
 
     // Book search functionality
     $("#searchButton").click(function() {
@@ -93,4 +94,36 @@ $(document).ready(function() {
         displaySearchResults();
         setupPagination();
     });
+    
+ $(document).on('click', '#resultsContainer .bookCard, #bookshelfContainer .bookCard', function() {
+        var bookId = $(this).data('id');
+        var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
+        var containerId = isBookshelfItem ? '#bookDetailsContainer' : 'bookDetailsContainer';
+        fetchBookDetails(bookId, containerId, function() {
+            
+        });
+    });
+    function fetchBookDetails(bookId, containerId, callback) {
+        $.ajax({
+            url: 'https://www.googleapis.com/books/v1/volumes/' + bookId,
+            type: 'GET',
+            success: function(response) {
+                $(containerId).empty();
+                const template = $("#details-template").html();
+                const rendered = Mustache.render(template, {
+                    title: response.volumeInfo.title,
+                    subtitle: response.volumeInfo.subtitle,
+                    authors: response.volumeInfo.authors ? response.volumeInfo.authors.join(', ') : '',
+                    publishedDate: response.volumeInfo.publishedDate,
+                    description: response.volumeInfo.description,
+                    thumbnail: response.volumeInfo.imageLinks ? response.volumeInfo.imageLinks.thumbnail : ''
+                });
+                $(containerId).append(rendered);
+                if (callback) callback();
+            },
+            error: function(error) {
+                console.log('Error:', error);
+            }
+        });
+    }
 });
