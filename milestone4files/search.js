@@ -44,7 +44,7 @@ $(document).ready(function() {
         }
     }
 
-    function fetchResults(searchTerm, startIndex, maxResults, callback) {
+   function fetchResults(searchTerm, startIndex, maxResults, callback) {
         $.ajax({
             url: `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&startIndex=${startIndex}&maxResults=${maxResults}`,
             method: 'GET',
