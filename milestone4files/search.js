@@ -4,11 +4,8 @@ $(document).ready(function() {
     let searchResults = [];
     const maxResultsPerRequest = 40;
     let isGridView = true;
-
-    // Initialize search history
-    loadSearchHistory();
-
-    // Book search functionality
+    
+    // Book search 
     $("#searchButton").click(function() {
         performSearch();
     });
@@ -20,7 +17,7 @@ $(document).ready(function() {
         }
     });
 
-    // Toggle view layout
+    // Toggle view 
     $("#toggle-view").click(function() {
         isGridView = !isGridView;
         displaySearchResults();
@@ -120,7 +117,7 @@ $(document).ready(function() {
     $(document).on('click', '#resultsContainer .book-item, #bookshelfContainer .book-item', function() {
         var bookId = $(this).data('id');
         var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
-        var containerId = isBookshelfItem ? '#bookshelf-details-container' : '#book-details-container';
+        var containerId = isBookshelfItem ? '#bookshelf-details-container' : '#bookDetailsContainer';
         fetchBookDetails(bookId, containerId, function() {
             // Smooth scroll to the book details container
             $('html, body').animate({
