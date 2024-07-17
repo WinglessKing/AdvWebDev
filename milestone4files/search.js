@@ -99,9 +99,9 @@ $(document).ready(function() {
         if (totalPages > 1) {
             for (let i = 1; i <= totalPages; i++) {
                 let pageLink = $('<span class="page-link">' + i + '</span>');
-                pageLink.data('page', i);
+                pageNum.data('page', i);
                 if (i === currentPage) {
-                    pageLink.addClass('active');
+                    pageNum.addClass('active');
                 }
                 paginationContainer.append(pageLink);
             }
