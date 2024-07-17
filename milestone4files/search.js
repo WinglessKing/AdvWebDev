@@ -120,7 +120,7 @@ $(document).ready(function() {
     $(document).on('click', '#resultsContainer .book-item, #bookshelfContainer .book-item', function() {
         var bookId = $(this).data('id');
         var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
-        var containerId = isBookshelfItem ? '#bookshelf-details-container' : '#bookDetailsContainer';
+        var containerId = isBookshelfItem ? '#bookshelf-details-container' : '#book-details-container';
         fetchBookDetails(bookId, containerId, function() {
             // Smooth scroll to the book details container
             $('html, body').animate({
