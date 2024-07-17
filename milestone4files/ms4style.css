@@ -78,7 +78,7 @@ nav ul li a:hover {
     color: #f5f5f5;
 }
 
-#search-button, .toggle-view-button {
+#searchButton, .toggle-view-button {
     padding: 10px 20px;
     background-color: #d26d62;
     border: none;
@@ -89,7 +89,7 @@ nav ul li a:hover {
     margin-left: 10px;
 }
 
-#search-button:hover, .toggle-view-button:hover {
+#searchButton:hover, .toggle-view-button:hover {
     background-color: #c0392b;
 }
 
