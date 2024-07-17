@@ -57,13 +57,13 @@ nav ul li a:hover {
     margin-top: 50px;
 }
 
-#searchContainer h1, #bookdetailsContainer h1, #bookshelf-title h1 {
+#searchContainer h1, #bookDetailsContainer h1, #bookshelf-title h1 {
     margin-bottom: 10px;
     font-size: 2.5em;
     color: #d26d62;
 }
 
-#searchContainer p, #bookdetailsContainer p, #bookshelf-title p {
+#searchContainer p, #bookDetailsContainer p, #bookshelf-title p {
     margin-bottom: 20px;
     font-size: 1.2em;
 }
