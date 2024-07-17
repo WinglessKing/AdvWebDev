@@ -5,13 +5,16 @@ $(document).ready(function() {
     const maxResultsPerRequest = 40;
     let isGridView = true;
 
-    // Book search 
+    // Initialize search history
+    loadSearchHistory();
+
+    // Book search functionality
     $("#search-button").click(function() {
         performSearch();
     });
 
     // Trigger search on Enter key press
-    $("#keyTerm").keypress(function(event) {
+    $("#search-term").keypress(function(event) {
         if (event.which == 13) { // 13 is the Enter key code
             performSearch();
         }
@@ -25,7 +28,7 @@ $(document).ready(function() {
 
     // Perform search
     function performSearch() {
-        var searchTerm = $("#keyTerm").val();
+        var searchTerm = $("#search-term").val();
         if (searchTerm) {
             addSearchHistory(searchTerm);
             searchResults = [];
@@ -61,7 +64,7 @@ $(document).ready(function() {
     }
 
     function displaySearchResults() {
-        let resultsContainer = $("#resultsContainer");
+        let resultsContainer = $("#results-container");
         resultsContainer.empty();
         let startIndex = (currentPage - 1) * itemsPerPage;
         let endIndex = startIndex + itemsPerPage;
@@ -88,7 +91,7 @@ $(document).ready(function() {
     }
 
     function setupPagination() {
-        let paginationContainer = $("#paginationContainer");
+        let paginationContainer = $("#pagination-container");
         paginationContainer.empty();
         let totalPages = Math.ceil(searchResults.length / itemsPerPage);
         console.log('Total pages:', totalPages);  // Debug log
@@ -114,10 +117,10 @@ $(document).ready(function() {
         });
     }
 
-    $(document).on('click', '#resultsContainer .book-item, #bookshelfContainer .book-item', function() {
+    $(document).on('click', '#results-container .book-item, #bookshelf-container .book-item', function() {
         var bookId = $(this).data('id');
-        var isBookshelfItem = $(this).closest('#bookshelfContainer').length > 0;
-        var containerId = isBookshelfItem ? '#bookshelf-details-container' : '#bookDetailsContainer';
+        var isBookshelfItem = $(this).closest('#bookshelf-container').length > 0;
+        var containerId = isBookshelfItem ? '#bookshelf-details-container' : '#book-details-container';
         fetchBookDetails(bookId, containerId, function() {
             // Smooth scroll to the book details container
             $('html, body').animate({
@@ -149,4 +152,31 @@ $(document).ready(function() {
             }
         });
     }
+
+    // Search history functions
+    function addSearchHistory(searchTerm) {
+        let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+        searchHistory = searchHistory.filter(term => term !== searchTerm); // Remove if already exists
+        searchHistory.unshift(searchTerm); // Add to the beginning
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+        displaySearchHistory();
+    }
+
+    function loadSearchHistory() {
+        displaySearchHistory();
+    }
+
+    function displaySearchHistory() {
+        let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+        let searchHistoryList = $("#search-history-list");
+        searchHistoryList.empty();
+        searchHistory.forEach(function(term) {
+            searchHistoryList.append('<li>' + term + '</li>');
+        });
+    }
+
+    $(document).on('click', '#search-history-list li', function() {
+        $("#search-term").val($(this).text());
+        performSearch();
+    });
 });
