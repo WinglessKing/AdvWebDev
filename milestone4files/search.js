@@ -25,7 +25,7 @@ $(document).ready(function() {
 
     // Perform search
     function performSearch() {
-        var searchTerm = $("#keyTerm").val();
+        var searchTerm = $("#keyterm").val();
         if (searchTerm) {
             addSearchHistory(searchTerm);
             searchResults = [];
