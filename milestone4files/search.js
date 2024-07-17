@@ -98,7 +98,7 @@ $(document).ready(function() {
 
         if (totalPages > 1) {
             for (let i = 1; i <= totalPages; i++) {
-                let pageLink = $('<span class="page-link">' + i + '</span>');
+                let pageNum = $('<span class="page-link">' + i + '</span>');
                 pageNum.data('page', i);
                 if (i === currentPage) {
                     pageNum.addClass('active');
@@ -152,31 +152,5 @@ $(document).ready(function() {
             }
         });
     }
-
-    // Search history functions
-    function addSearchHistory(searchTerm) {
-        let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-        searchHistory = searchHistory.filter(term => term !== searchTerm); // Remove if already exists
-        searchHistory.unshift(searchTerm); // Add to the beginning
-        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-        displaySearchHistory();
-    }
-
-    function loadSearchHistory() {
-        displaySearchHistory();
-    }
-
-    function displaySearchHistory() {
-        let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-        let searchHistoryList = $("#search-history-list");
-        searchHistoryList.empty();
-        searchHistory.forEach(function(term) {
-            searchHistoryList.append('<li>' + term + '</li>');
-        });
-    }
-
-    $(document).on('click', '#search-history-list li', function() {
-        $("#search-term").val($(this).text());
-        performSearch();
-    });
+   
 });
