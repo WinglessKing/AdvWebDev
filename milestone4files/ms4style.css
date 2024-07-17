@@ -51,20 +51,58 @@ nav ul li a:hover {
 
 
         /*Container Styling*/
-        #searchContainer {
-            padding: 20px;
-            text-align: center;
-            border: 10px solid #2f1209:    
-        }
-        
-        #resultsContainer, #bookshelfContainer {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            padding: 20px;
-                border: 5px black;
-        }
-        
+      #searchContainer, #resultsContainer, #bookshelfContainer, #paginationContainer, #bookshelf-title {
+    padding: 20px;
+    text-align: center;
+    margin-top: 50px;
+}
+
+#searchContainer h1, #bookdetailsContainer h1, #bookshelf-title h1 {
+    margin-bottom: 10px;
+    font-size: 2.5em;
+    color: #d26d62;
+}
+
+#searchContainer p, #bookdetailsContainer p, #bookshelf-title p {
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+#keyTerm {
+    padding: 10px;
+    width: 300px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    background-color: #2c2c2c;
+    color: #f5f5f5;
+}
+
+#search-button, .toggle-view-button {
+    padding: 10px 20px;
+    background-color: #d26d62;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-left: 10px;
+}
+
+#search-button:hover, .toggle-view-button:hover {
+    background-color: #c0392b;
+}
+
+#resultsContainer.grid-view, #bookshelfContainer.grid-view {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+    justify-items: center;
+}
+
+#resultsContainer.list-view, #bookshelfContainer.list-view {
+    display: block;
+}
         .bookCard {
             border: 5px black;
             padding: 5px;
