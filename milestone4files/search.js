@@ -4,9 +4,9 @@ $(document).ready(function() {
     let searchResults = [];
     const maxResultsPerRequest = 40;
     let isGridView = true;
-    
+
     // Book search 
-    $("#searchButton").click(function() {
+    $("#search-button").click(function() {
         performSearch();
     });
 
@@ -17,7 +17,7 @@ $(document).ready(function() {
         }
     });
 
-    // Toggle view 
+    // Toggle view layout
     $("#toggle-view").click(function() {
         isGridView = !isGridView;
         displaySearchResults();
@@ -25,7 +25,7 @@ $(document).ready(function() {
 
     // Perform search
     function performSearch() {
-        var searchTerm = $("#keyterm").val();
+        var searchTerm = $("#keyTerm").val();
         if (searchTerm) {
             addSearchHistory(searchTerm);
             searchResults = [];
@@ -44,7 +44,7 @@ $(document).ready(function() {
         }
     }
 
-   function fetchResults(searchTerm, startIndex, maxResults, callback) {
+    function fetchResults(searchTerm, startIndex, maxResults, callback) {
         $.ajax({
             url: `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&startIndex=${startIndex}&maxResults=${maxResults}`,
             method: 'GET',
@@ -95,10 +95,10 @@ $(document).ready(function() {
 
         if (totalPages > 1) {
             for (let i = 1; i <= totalPages; i++) {
-                let pageNum = $('<span class="page-link">' + i + '</span>');
-                pageNum.data('page', i);
+                let pageLink = $('<span class="page-link">' + i + '</span>');
+                pageLink.data('page', i);
                 if (i === currentPage) {
-                    pageNum.addClass('active');
+                    pageLink.addClass('active');
                 }
                 paginationContainer.append(pageLink);
             }
@@ -149,5 +149,4 @@ $(document).ready(function() {
             }
         });
     }
-   
 });
