@@ -1,23 +1,37 @@
-const API_KEY = 'bf24357cc71d2715cc9f5495b1c3d699';
+const API_KEY = 'your_api_key_here';
 const BASE_URL = 'https://api.themoviedb.org/3';
+let currentPage = 1;
+let currentQuery = '';
+let currentGenre = '';
 
 $(document).ready(function() {
     $('#search-button').click(function() {
-        const query = $('#search-input').val();
-        searchMovies(query);
+        currentQuery = $('#search-input').val();
+        currentPage = 1;
+        searchMovies(currentQuery, currentPage, currentGenre);
+    });
+
+    $('#genre-filter').change(function() {
+        currentGenre = $(this).val();
+        currentPage = 1;
+        searchMovies(currentQuery, currentPage, currentGenre);
     });
 
     loadTopPopular();
+    loadGenres();
 
-    function searchMovies(query) {
+    function searchMovies(query, page = 1, genre = '') {
         $.ajax({
             url: `${BASE_URL}/search/multi`,
             data: {
                 api_key: API_KEY,
-                query: query
+                query: query,
+                page: page,
+                with_genres: genre
             },
             success: function(response) {
                 displaySearchResults(response.results);
+                setupPagination(response.page, response.total_pages);
             },
             error: function() {
                 alert('Error fetching search results');
@@ -36,6 +50,25 @@ $(document).ready(function() {
             },
             error: function() {
                 alert('Error fetching top/popular movies');
+            }
+        });
+    }
+
+    function loadGenres() {
+        $.ajax({
+            url: `${BASE_URL}/genre/movie/list`,
+            data: {
+                api_key: API_KEY
+            },
+            success: function(response) {
+                const genreFilter = $('#genre-filter');
+                response.genres.forEach(genre => {
+                    const option = $('<option>').attr('value', genre.id).text(genre.name);
+                    genreFilter.append(option);
+                });
+            },
+            error: function() {
+                alert('Error fetching genres');
             }
         });
     }
@@ -72,6 +105,23 @@ $(document).ready(function() {
             card.append(img, info);
             topPopular.append(card);
         });
+    }
+
+    function setupPagination(current, total) {
+        const pagination = $('#pagination');
+        pagination.empty();
+        if (total > 1) {
+            for (let i = 1; i <= total; i++) {
+                const pageButton = $('<button>').text(i).click(() => {
+                    currentPage = i;
+                    searchMovies(currentQuery, currentPage, currentGenre);
+                });
+                if (i === current) {
+                    pageButton.addClass('active');
+                }
+                pagination.append(pageButton);
+            }
+        }
     }
 
     function showDetails(movie) {
@@ -146,4 +196,6 @@ $(document).ready(function() {
         info.append(name, biography, backButton);
         detailsView.append(img, info);
     }
+});
+
 });
