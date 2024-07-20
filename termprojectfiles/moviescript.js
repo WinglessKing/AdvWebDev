@@ -1,4 +1,4 @@
-const API_KEY = 'your_api_key_here';
+const API_KEY = 'bf24357cc71d2715cc9f5495b1c3d699';
 const BASE_URL = 'https://api.themoviedb.org/3';
 let currentPage = 1;
 let currentQuery = '';
