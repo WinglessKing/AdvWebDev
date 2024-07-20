@@ -17,6 +17,10 @@ header input {
     margin-right: 10px;
 }
 
+header select {
+    margin-left: 10px;
+}
+
 header button {
     padding: 5px 10px;
 }
@@ -39,4 +43,21 @@ main {
 .movie-card img {
     max-width: 100px;
     margin-right: 10px;
+}
+
+#pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#pagination button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+#pagination button.active {
+    font-weight: bold;
+    background-color: #333;
+    color: white;
 }
