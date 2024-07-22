@@ -1,10 +1,6 @@
 const API_KEY = 'bf24357cc71d2715cc9f5495b1c3d699';
 const BASE_URL = 'https://api.themoviedb.org/3';
 let currentPage = 1;
-let itemsPerPage = 10;
-let searchResults = [];
-const maxResultsPerRequest = 40;
-
 let currentQuery = '';
 let currentGenre = '';
 
@@ -26,7 +22,7 @@ $(document).ready(function() {
 
     function searchMovies(query, page = 1, genre = '') {
         $.ajax({
-            url: `${BASE_URL}/search/multi`,
+            url: `${BASE_URL}/search/movie`,
             data: {
                 api_key: API_KEY,
                 query: query,
@@ -54,6 +50,25 @@ $(document).ready(function() {
             },
             error: function() {
                 alert('Error fetching top/popular movies');
+            }
+        });
+    }
+
+    function loadGenres() {
+        $.ajax({
+            url: `${BASE_URL}/genre/movie/list`,
+            data: {
+                api_key: API_KEY
+            },
+            success: function(response) {
+                const genreFilter = $('#genre-filter');
+                response.genres.forEach(genre => {
+                    const option = $('<option>').attr('value', genre.id).text(genre.name);
+                    genreFilter.append(option);
+                });
+            },
+            error: function() {
+                alert('Error fetching genres');
             }
         });
     }
@@ -92,31 +107,21 @@ $(document).ready(function() {
         });
     }
 
-    function setupPagination() {
-        let paginationContainer = $("#paginationContainer");
-        paginationContainer.empty();
-        let totalPages = Math.ceil(searchResults.length / itemsPerPage);
-        console.log('Total pages:', totalPages);  // Debug log
-
-        if (totalPages > 1) {
-            for (let i = 1; i <= totalPages; i++) {
-                let pageLink = $('<span class="page-link">' + i + '</span>');
-                pageLink.data('page', i);
-                if (i === currentPage) {
-                    pageLink.addClass('active');
+    function setupPagination(current, total) {
+        const pagination = $('#pagination');
+        pagination.empty();
+        if (total > 1) {
+            for (let i = 1; i <= total; i++) {
+                const pageButton = $('<button>').text(i).click(() => {
+                    currentPage = i;
+                    searchMovies(currentQuery, currentPage, currentGenre);
+                });
+                if (i === current) {
+                    pageButton.addClass('active');
                 }
-                paginationContainer.append(pageLink);
+                pagination.append(pageButton);
             }
-        } else {
-            paginationContainer.append('<span class="page-link active">1</span>');
         }
-
-        $(document).off('click', '.page-link'); // Remove any previous event handlers
-        $(document).on('click', '.page-link', function() {
-            currentPage = $(this).data('page');
-            displaySearchResults();
-            setupPagination(); // Update pagination to reflect the current active page
-        });
     }
 
     function showDetails(movie) {
@@ -191,6 +196,4 @@ $(document).ready(function() {
         info.append(name, biography, backButton);
         detailsView.append(img, info);
     }
-});
-
 });
