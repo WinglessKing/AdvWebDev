@@ -58,25 +58,6 @@ $(document).ready(function() {
         });
     }
 
-    function loadGenres() {
-        $.ajax({
-            url: `${BASE_URL}/genre/movie/list`,
-            data: {
-                api_key: API_KEY
-            },
-            success: function(response) {
-                const genreFilter = $('#genre-filter');
-                response.genres.forEach(genre => {
-                    const option = $('<option>').attr('value', genre.id).text(genre.name);
-                    genreFilter.append(option);
-                });
-            },
-            error: function() {
-                alert('Error fetching genres');
-            }
-        });
-    }
-
     function displaySearchResults(results) {
         const searchResults = $('#search-results');
         searchResults.empty();
@@ -111,7 +92,7 @@ $(document).ready(function() {
         });
     }
 
-     function setupPagination() {
+    function setupPagination() {
         let paginationContainer = $("#paginationContainer");
         paginationContainer.empty();
         let totalPages = Math.ceil(searchResults.length / itemsPerPage);
@@ -129,6 +110,14 @@ $(document).ready(function() {
         } else {
             paginationContainer.append('<span class="page-link active">1</span>');
         }
+
+        $(document).off('click', '.page-link'); // Remove any previous event handlers
+        $(document).on('click', '.page-link', function() {
+            currentPage = $(this).data('page');
+            displaySearchResults();
+            setupPagination(); // Update pagination to reflect the current active page
+        });
+    }
 
     function showDetails(movie) {
         const detailsView = $('#details-view');
