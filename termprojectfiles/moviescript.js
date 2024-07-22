@@ -1,6 +1,10 @@
 const API_KEY = 'bf24357cc71d2715cc9f5495b1c3d699';
 const BASE_URL = 'https://api.themoviedb.org/3';
 let currentPage = 1;
+let itemsPerPage = 10;
+let searchResults = [];
+const maxResultsPerRequest = 40;
+
 let currentQuery = '';
 let currentGenre = '';
 
@@ -107,22 +111,24 @@ $(document).ready(function() {
         });
     }
 
-    function setupPagination(current, total) {
-        const pagination = $('#pagination');
-        pagination.empty();
-        if (total > 1) {
-            for (let i = 1; i <= total; i++) {
-                const pageButton = $('<button>').text(i).click(() => {
-                    currentPage = i;
-                    searchMovies(currentQuery, currentPage, currentGenre);
-                });
-                if (i === current) {
-                    pageButton.addClass('active');
+     function setupPagination() {
+        let paginationContainer = $("#paginationContainer");
+        paginationContainer.empty();
+        let totalPages = Math.ceil(searchResults.length / itemsPerPage);
+        console.log('Total pages:', totalPages);  // Debug log
+
+        if (totalPages > 1) {
+            for (let i = 1; i <= totalPages; i++) {
+                let pageLink = $('<span class="page-link">' + i + '</span>');
+                pageLink.data('page', i);
+                if (i === currentPage) {
+                    pageLink.addClass('active');
                 }
-                pagination.append(pageButton);
+                paginationContainer.append(pageLink);
             }
+        } else {
+            paginationContainer.append('<span class="page-link active">1</span>');
         }
-    }
 
     function showDetails(movie) {
         const detailsView = $('#details-view');
