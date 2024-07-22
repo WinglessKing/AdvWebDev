@@ -2,32 +2,23 @@ const API_KEY = 'bf24357cc71d2715cc9f5495b1c3d699';
 const BASE_URL = 'https://api.themoviedb.org/3';
 let currentPage = 1;
 let currentQuery = '';
-let currentGenre = '';
 
 $(document).ready(function() {
     $('#search-button').click(function() {
         currentQuery = $('#search-input').val();
         currentPage = 1;
-        searchMovies(currentQuery, currentPage, currentGenre);
-    });
-
-    $('#genre-filter').change(function() {
-        currentGenre = $(this).val();
-        currentPage = 1;
-        searchMovies(currentQuery, currentPage, currentGenre);
+        searchMovies(currentQuery, currentPage);
     });
 
     loadTopPopular();
-    loadGenres();
 
-    function searchMovies(query, page = 1, genre = '') {
+    function searchMovies(query, page = 1) {
         $.ajax({
             url: `${BASE_URL}/search/movie`,
             data: {
                 api_key: API_KEY,
                 query: query,
-                page: page,
-                with_genres: genre
+                page: page
             },
             success: function(response) {
                 displaySearchResults(response.results);
@@ -50,25 +41,6 @@ $(document).ready(function() {
             },
             error: function() {
                 alert('Error fetching top/popular movies');
-            }
-        });
-    }
-
-    function loadGenres() {
-        $.ajax({
-            url: `${BASE_URL}/genre/movie/list`,
-            data: {
-                api_key: API_KEY
-            },
-            success: function(response) {
-                const genreFilter = $('#genre-filter');
-                response.genres.forEach(genre => {
-                    const option = $('<option>').attr('value', genre.id).text(genre.name);
-                    genreFilter.append(option);
-                });
-            },
-            error: function() {
-                alert('Error fetching genres');
             }
         });
     }
@@ -114,7 +86,7 @@ $(document).ready(function() {
             for (let i = 1; i <= total; i++) {
                 const pageButton = $('<button>').text(i).click(() => {
                     currentPage = i;
-                    searchMovies(currentQuery, currentPage, currentGenre);
+                    searchMovies(currentQuery, currentPage);
                 });
                 if (i === current) {
                     pageButton.addClass('active');
