@@ -9,7 +9,14 @@ $(document).ready(function() {
         currentPage = 1;
         searchMovies(currentQuery, currentPage);
     });
+$('#grid-view-button').click(function() {
+        $('#search-results').removeClass('list-view').addClass('grid-view');
+    });
 
+    $('#list-view-button').click(function() {
+        $('#search-results').removeClass('grid-view').addClass('list-view');
+    });
+    
     loadTopPopular();
 
     function searchMovies(query, page = 1) {
